@@ -1,0 +1,42 @@
+@import "./vars";
+
+.navigation {
+    height: 11.5rem;
+    width: 3rem;
+    border: 1px solid $white;
+    border-radius: 2rem;
+    position: absolute;
+    top: 50px;
+}
+
+.carousel__wrapper {
+    position: relative;
+}
+
+.navigation__prev {
+    left: -6rem;
+}
+
+.navigation__next {
+    right: -6rem;
+}
+
+.carousel__item {
+    position: relative;
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 2px solid $gray;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        border: 2px solid $yellow;
+    }
+
+    .carousel__title_wrapper {
+        position: absolute;
+        top: 2rem;
+        left: 3.1rem;
+        z-index: 2;
+    }
+}

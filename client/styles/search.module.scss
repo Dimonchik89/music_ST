@@ -1,0 +1,29 @@
+@import "./vars";
+@import "./mixin/mixin.scss";
+
+.search_header__wrapper {
+    margin-top: 6.7rem;
+}
+
+.search {
+    width: 86rem;
+    height: 5.3rem;
+    background: transparent;
+    border: 2px solid $gray;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 1.8rem 2.2rem;
+
+    .input {
+        color: $white;
+        font-size: 2.4rem;
+        font-weight: 400;
+        flex: 1;
+
+        &::placeholder {
+            color: $white;
+            font-size: 2.4rem;
+        }
+    }
+}

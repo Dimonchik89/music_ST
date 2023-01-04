@@ -1,0 +1,59 @@
+@import "./mixin/mixin.scss";
+
+.register {
+    background: url("../static/images/bg_sm.jpg");
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .register__wrapper {
+        width: 100%;
+        height: 74.2rem;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(34px);
+
+        @include _375 {
+            height: 100vh;
+        }
+
+        .register__inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .register__logo__wrapper {
+                position: absolute;
+                top: 2.8rem;
+                left: 2.5rem;
+
+                @include _375 {
+                    top: 1.5rem;
+                    left: .4rem;
+                }
+            }
+        }
+    }
+}
+
+
+.register__wrapper__register {
+    margin-top: 14.1rem;
+}
+
+.register__wrapper__Login {
+    margin-top: 3.2rem;
+}
+
+.register__route__link__wrapper {
+    margin-left: 1rem;
+}
+
+.register__reset__link {
+    height: 2.8rem;
+    display: block;
+}

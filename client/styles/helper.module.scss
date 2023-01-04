@@ -1,0 +1,63 @@
+@import "./vars";
+
+.mt__81 {
+    margin-top: 8.1rem;
+}
+
+.fz__24 {
+    font-size: 2.4rem;
+    line-height: 1.2;
+}
+
+.color__yellow {
+    color: $yellow;
+}
+
+.color__white {
+    color: $white;
+}
+
+.fw__medium {
+    font-weight: 500;
+}
+
+.d__flex {
+    display: flex;
+}
+
+.align__center {
+    align-items: center;
+}
+
+.justify__center {
+    justify-content: center;
+}
+
+.space__between {
+    justify-content: space-between;
+}
+
+.direction__column {
+    flex-direction: column;
+}
+
+.horizontal__center {
+    display: flex;
+    justify-content: center;
+}
+
+.lineheight__12 {
+    line-height: 2.8rem;
+}
+
+.lineheight__60 {
+    line-height: 6rem;
+}
+
+.text__capitalize {
+    text-transform: capitalize;
+}
+
+.weight__medium {
+    font-weight: 500;
+}

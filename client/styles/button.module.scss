@@ -1,0 +1,136 @@
+@import "./vars";
+
+.button__yellow__bold {
+    width: 20rem;
+    height: 5.1rem;
+    background: $yellow;
+    border-radius: 2rem;
+    cursor: pointer;
+
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: $black;
+
+    &:hover {
+        background: darken($yellow, 10%);
+        transition: all .2s ease-in-out;
+    }
+}
+
+.border_gray_text_yellow {
+    width: 21.8rem;
+    height: 5rem;
+    line-height: 2.9rem;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: $yellow;
+    text-transform: capitalize;
+    border: 2px solid $gray;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.play {
+    width: 3.2rem;
+    height: 3.2rem;
+    border: 2px solid $white;
+    border-radius: 1rem;
+    background: url("../static/icon/play-white.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    cursor: pointer;
+
+    &:hover {
+        background: url("../static/icon/play-black.svg");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-color: $yellow;
+        border: 2px solid $yellow;
+    }
+}
+
+.pause {
+    width: 3.2rem;
+    height: 3.2rem;
+    border: 2px solid $white;
+    border-radius: 1rem;
+    background: url("../static/icon/pause-white.svg");
+    background-repeat: no-repeat;
+    background-position: 48% 50%;
+    cursor: pointer;
+
+    &:hover {
+        background: url("../static/icon/pause-black.svg");
+        background-repeat: no-repeat;
+        background-position: 48% 50%;
+        background-color: $yellow;
+        border: 2px solid $yellow;
+    }
+}
+
+.header__download {
+    width: 20rem;
+    height: 5.1rem;
+    border: 2px solid $white;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    // background-image: url("../static/icon/download.svg");
+    // background-repeat: no-repeat;
+    // background-position: 9% 40%;
+
+    p {
+        display: block;
+        margin-left: 1rem;
+        font-size: 2.4rem;
+        line-height: 1;
+        font-weight: 500;
+        color: $white;
+        margin-left: .8rem;
+    }
+}
+
+.header__download__hover {
+    background-color: $yellow;
+    border: inherit;
+
+    p {
+        color: $black;
+    }
+}
+
+.header__square {
+    margin-left: 2rem;
+    width: 5.1rem;
+    height: 5.1rem;
+    border: 2px solid $white;
+    border-radius: 2rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $yellow;
+        border: inherit;
+    }
+}
+
+.header__heart {
+    background-image: url("../static/icon/heart-white-big.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    &:hover {
+        background-image: url("../static/icon/heart-black-big.svg");
+    }
+}
+
+.header__share {
+    background-image: url("../static/icon/share-white-big.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    &:hover {
+        background-image: url("../static/icon/share-black-big.svg");
+    }
+}

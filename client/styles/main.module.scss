@@ -1,0 +1,12 @@
+@import "./vars";
+
+.main {
+    width: 100%;
+    height: 330.1rem; //change
+    background: url("../static/images/bg.jpg");
+    background-size: cover;
+}
+
+.main__carousel {
+    margin: 8.1rem 0;
+}

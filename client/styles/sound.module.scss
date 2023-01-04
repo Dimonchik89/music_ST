@@ -1,0 +1,256 @@
+@import "./vars";
+
+.container {
+    position: relative;
+
+    &:after {
+        content: "";
+        width: 110rem;
+        height: 2px;
+        background: $white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    .wrapper {
+        padding: 8.1rem 9rem 11.3rem 9rem;
+        background: rgba($black, .5);
+        backdrop-filter: blur(34px);
+        border-radius: 2rem;
+        position: relative;
+
+        &::after {
+            content: "";
+            width: 108rem;
+            height: 2px;
+            background: $white;
+            position: absolute;
+            top: calc(100% - 3.2rem);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .inner {
+            width: 100%;
+            height: 13rem;
+            margin-bottom: 3.2rem;
+
+            .item {
+                padding: 1.9rem 2rem 1.9rem 2.1rem;
+                background: $gray-dark;
+                border-radius: 2rem;
+                display: flex;
+                align-items: center;
+
+                .logo__container {
+                    border-radius: 1rem;
+                    overflow: hidden;
+                    margin-right: 1.9rem;
+                    width: 9rem;
+                    height: 9rem;
+
+                    .logo {
+                        object-fit: contain;
+                    }
+                }
+
+                .content {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+
+                    .head {
+                        display: flex;
+                        justify-content: space-between;
+                        height: 2.8rem;
+                    }
+
+                    // .button {
+                    //     display: inline-block;
+                    //     padding: 0;
+                    //     width: 4.4rem;
+                    //     height: 3.2rem;
+                    //     border: 2px solid $white;
+                    //     border-radius: 1rem;
+                    //     cursor: pointer;
+
+                    //     &:hover {
+                    //         background-color: $yellow;
+                    //         border: none;
+                    //         background-repeat: no-repeat;
+                    //         background-position: 50% 50%;
+                    //     }
+                    // }
+
+                    // .button__heart {
+                    //     background: url("../static/icon/heart-white.svg");
+                    //     background-repeat: no-repeat;
+                    //     background-position: center;
+                    //     margin-right: 2.3rem;
+
+                    //     &:hover {
+                    //         background-image: url("../static/icon/heart-black.svg");
+                    //         background-repeat: no-repeat;
+                    //         background-position: center;
+                    //     }
+                    // }
+
+                    // .button__share {
+                    //     background: url("../static/icon/share-white.svg");
+                    //     background-repeat: no-repeat;
+                    //     background-position: 50% 50%;
+                    //     margin-right: 1.9rem;
+
+                    //     &:hover {
+                    //         background-image: url("../static/icon/share-black.svg");
+                    //         background-repeat: no-repeat;
+                    //         background-position: 50% 50%;
+                    //     }
+                    // }
+
+                    // .button__close_wrapper {
+                    //     width: 4.4rem;
+                    //     height: 3.2rem;
+                    //     margin-right: 1.9rem;
+                    //     text-align: right;
+                    //     position: relative;
+                    // }
+
+                    // .button__share_close {
+                    //     background: url("../static/icon/share-close.svg");
+                    //     background-repeat: no-repeat;
+                    //     background-position: 50% 50%;
+                    //     border: 2px solid $white;
+                    //     width: 3rem;
+                    //     height: 3rem;
+                    //     border-radius: 1rem;
+                    //     cursor: pointer;
+                    //     position: relative;
+                    //     z-index: 10;
+                    // }
+
+                    .button__text {
+                        width: 20rem;
+                        height: 3.2rem;
+                        border: 2px solid $white;
+                        border-radius: 1rem;
+                        font-size: 1.6rem;
+                        line-height: 3.2rem;
+                        font-weight: 600;
+                        color: $white;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        &:hover {
+                            border: none;
+                            background-color: $yellow;
+                            color: $black;
+                        }
+                    }
+                }
+            }   
+        }
+    }
+}
+
+.track {
+    flex: 1;
+    height: 4.5rem;
+    overflow: hidden;
+}
+
+
+
+.button {
+    display: inline-block;
+    padding: 0;
+    width: 4.4rem;
+    height: 3.2rem;
+    border: 2px solid $white;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $yellow;
+        border: none;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+}
+
+.button__close_wrapper {
+    width: 4.4rem;
+    height: 3.2rem;
+    margin-right: 1.9rem;
+    text-align: right;
+    position: relative;
+}
+
+.button__share_close {
+    background: url("../static/icon/share-close.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border: 2px solid $white;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+}
+
+.button__share {
+    background: url("../static/icon/share-white.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    margin-right: 1.9rem;
+
+    &:hover {
+        background-image: url("../static/icon/share-black.svg");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+}
+
+.button__heart {
+    background: url("../static/icon/heart-white.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 2.3rem;
+
+    &:hover {
+        background-image: url("../static/icon/heart-black.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+.timer {
+    width: 4.5rem;
+    height: 2.6rem;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid #000000;
+    backdrop-filter: blur(6px);
+    border-radius: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: $black;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+
+    .timer__text {
+        color: $black;
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 1;
+    }
+}
