@@ -6,3 +6,4 @@ export const actualMusics = createSelector(baseState, state => state.actualMusic
 export const loading = createSelector(baseState, state => state.loading);
 export const error = createSelector(baseState, state => state.error);
 export const music = createSelector(baseState, state => state.music)
+export const currentTimeDublicate = createSelector(baseState, state => state.currentTimeDublicate)

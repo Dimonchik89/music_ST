@@ -29,6 +29,10 @@
     align-items: center;
 }
 
+.align__end {
+    align-items: end;
+}
+
 .justify__center {
     justify-content: center;
 }
@@ -60,4 +64,12 @@
 
 .weight__medium {
     font-weight: 500;
+}
+
+.width__100 {
+    width: 100%;
+}
+
+.height__100 {
+    height: 100%
 }

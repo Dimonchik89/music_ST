@@ -5,7 +5,7 @@ import helper from "../../styles/helper.module.scss";
 import text from "../../styles/text.module.scss";
 import button from "../../styles/button.module.scss"
 
-const SoundContent = ({music}) => {
+const SoundContent = ({music, player}) => {
 
     const scale = {width: "100%", display: "flex", alignItems: "center", height: "45px", overflow: "hidden", position: "relative"}
 
@@ -14,8 +14,15 @@ const SoundContent = ({music}) => {
             <Box>
                 <span className={text.text__sm}>Tunebox</span>
             </Box>
-            <Box className={helper.d__flex}>
-                <SoundPlayer music={music} scale={scale} playStyle={button.play} pauseStyle={button.pause}/>  
+            <Box className={`${helper.d__flex} ${helper.align__end}`}>
+                <SoundPlayer 
+                    music={music} 
+                    scale={scale} 
+                    playStyle={button.play} 
+                    pauseStyle={button.pause} 
+                    deltaTimerLeft={10}
+                    deltaHeight={45}
+                />  
             </Box>
         </Box>
     )

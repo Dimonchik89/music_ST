@@ -52,9 +52,10 @@ const Sound = ({actualMusics, selectMusics, loading}) => {
     const { query } = useRouter();
 
     useEffect(() => {
+        // console.log('query.category', query.category);
         selectMusics(musics.filter(item => {
             if(query.category) {
-                return item.category === query.category
+                return item.category == query.category
             } else {
                 return item.category === "1"
             }

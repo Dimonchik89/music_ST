@@ -1,13 +1,22 @@
 @import "./vars";
+@import "./mixin/mixin.scss";
 
 .title {
     font-size: 4.8rem;
     font-weight: 900;
     line-height: 1;
+
+    @include _375 {
+        font-size: 4rem;
+    }
 }
 
 .subtitle {
     font-size: 3.2rem;
+
+    @include _375 {
+        font-size: 2rem;
+    }
 }
 
 .text__sm {

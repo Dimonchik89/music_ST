@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import ButtonPlay from "../Button/ButtonPlay";
 import { useRouter } from "next/router";
-import { togglePlay, changeProgress, resetProgress } from "../../store/actualMusics";
+import { togglePlay, changeProgress, resetProgress, allStop, currentTimeDublicate } from "../../store/actualMusics";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { showHeaderPlayer } from "../../store/player/playerSlice";
 import { selectMusic } from "../../store/actualMusics";
 import { createStructuredSelector } from 'reselect';
+import { music } from "../../store/actualMusics";
 
+import helper from "../../styles/helper.module.scss";
 import button from "../../styles/button.module.scss";
 import sound from "../../styles/sound.module.scss";
 
@@ -24,43 +26,43 @@ const formWaveSurferOptions = (ref) => ({
   partialRender: true,
 });
 
-function WaveSurferNext({ music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, resetProgress, scale, playStyle, pauseStyle }) {
+function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, resetProgress, scale, playStyle, pauseStyle, deltaTimerLeft, deltaHeight, headerMusic, allStop }) {
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const [ intervalId, setIntervalId ] = useState(null)
   const [ duration, setDuration ] = useState(0)
   const router = useRouter();
 
-const handleChangeProgress = () => {
-  changeProgress(wavesurfer.current?.getCurrentTime())
-}
-
-  useEffect(() => {
-    console.log('intervalId', intervalId)
-  }, [intervalId])
+  const handleChangeProgress = () => {
+    changeProgress(wavesurfer?.current?.getCurrentTime())
+  }
 
   const handlePlay = () => {
-        resetProgress() // 
-        togglePlay(music.id)
-        showHeaderPlayer()
+      if(music.id != headerMusic?.id) {
+        allStop()
+      }
+      if(headerMusic?.id !== music.id) {
         selectMusic(music.id)
+        showHeaderPlayer()
         router.push({ 
-            pathname: '/', 
-            query: { ...router.query, sound: music.id } }, 
-            undefined, 
-            {scroll: false}
+          pathname: '/', 
+          query: { ...router.query, sound: music.id } }, 
+          undefined, 
+          {scroll: false}
         )
-
-        wavesurfer.current.play();
+      }
       
-      setIntervalId(setInterval(handleChangeProgress, 500))
-    }
+      togglePlay(music.id)
+      
+      // wavesurfer.current.play();
+      
+    // setIntervalId(setInterval(handleChangeProgress, 100))
+  }
 
   const handlePause = () => {
       togglePlay(music.id)
-      wavesurfer.current.pause();
-      
-      clearInterval(intervalId)
+      // wavesurfer.current.pause();
+      // clearInterval(intervalId)
   }
 
   const clickOntimeScale = () => {
@@ -88,7 +90,6 @@ const handleChangeProgress = () => {
       });
 
       wavesurfer.current.on("ready", function () {
-        wavesurfer.current?.setCurrentTime(music?.progress)
         const duration = wavesurfer.current.getDuration();
         setDuration(duration);
       });
@@ -97,7 +98,7 @@ const handleChangeProgress = () => {
         waveformRef?.current?.children[0]?.remove()
       }
     };
-
+    
     create();
     
     return () => {
@@ -108,13 +109,26 @@ const handleChangeProgress = () => {
     };
   }, [music?.audio]);
 
-  let timerLeft = 40 + (music?.progress * (waveformRef.current?.scrollWidth / duration))
 
+  let timerLeft = deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration))
   //----------------------------
+  useEffect(() => {
+    wavesurfer?.current?.setCurrentTime(music?.progress)
+  }, [currentTimeDublicate])
 
   useEffect(() => {
-      wavesurfer.current?.setCurrentTime(music?.progress)
-  }, [music?.progress])
+    if(music.play) {
+      setTimeout(() => {
+        wavesurfer?.current?.play();
+      }, 1)
+      setIntervalId(setInterval(handleChangeProgress, 100))
+    } else {
+      setTimeout(() => {
+        wavesurfer?.current?.pause();
+      }, 1)
+      clearInterval(intervalId)
+    }
+  }, [music?.play])
 
   //--------------------------
 
@@ -132,27 +146,34 @@ const handleChangeProgress = () => {
   }
 
   return (
-    <div 
-      style={scale}
-    >
-      <div style={{display: 'flex', alignItems: 'flex-end', height: "100%"}}>
+    <>
+      <div className={`${helper.d__flex} ${helper.align__end} ${helper.height__100}`}>
         {selectButton}
       </div>
-        
-      <div id="waveform" ref={waveformRef} style={{flex: '1 0 auto', maxWidth: "80%", marginLeft: "30px", marginTop: "45px"}} onClick={clickOntimeScale}/>
-      <div
-        className={sound.timer}
-        style={{
-          left: timerLeft,
-        }}
-      >
-        <p className={sound.timer__text}>
-          {howLongPlay()}
-        </p>
+      <div 
+        className={sound.scale}
+      >   
+        <div id="waveform" ref={waveformRef} className={sound.waveform} onClick={clickOntimeScale}/>
+        <div
+          className={sound.timer}
+          style={{
+            left: timerLeft || 0,
+          }}
+        >
+          <p className={sound.timer__text}>
+            {howLongPlay()}
+          </p>
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }
+
+const mapStateToProps = createStructuredSelector({
+  headerMusic: music,
+  currentTimeDublicate
+})
 
 const mapDispatchToProps = dispatch => ({
   togglePlay: bindActionCreators(togglePlay, dispatch),
@@ -160,6 +181,7 @@ const mapDispatchToProps = dispatch => ({
   selectMusic: bindActionCreators(selectMusic, dispatch),
   changeProgress: bindActionCreators(changeProgress, dispatch),
   resetProgress: bindActionCreators(resetProgress, dispatch),
+  allStop: bindActionCreators(allStop, dispatch),
 })
 
-export default connect(null, mapDispatchToProps)(WaveSurferNext);
+export default connect(mapStateToProps, mapDispatchToProps)(WaveSurferNext);

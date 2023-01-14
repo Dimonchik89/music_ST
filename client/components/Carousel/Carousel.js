@@ -5,6 +5,7 @@ import { IconButton } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CarouselItem from './CarouselItem';
+import { Grid } from "swiper";
 
 import helper from "../../styles/helper.module.scss";
 import text from "../../styles/text.module.scss";
@@ -24,7 +25,7 @@ const Carousel = ({styleWrapper, category}) => {
     }, []);
 
     const slides = category?.map((item, i) => (
-        <SwiperSlide key={i}>
+        <SwiperSlide key={i} style={{merginRight: 0}}>
             <CarouselItem slide={item}/>
         </SwiperSlide>
     ))
@@ -33,20 +34,28 @@ const Carousel = ({styleWrapper, category}) => {
         <Box className={styleWrapper}>
             <Box className={carousel.carousel__wrapper}>
                 <Swiper
-                    freeMode={true}
-                    grabCursor={true}
+                    slidesPerView={2}
                     spaceBetween={20}
-                    slidesPerView={4}
-                    onSlideChange={() => {}}
-                    onSwiper={(swiper) => {}}
-                    navigation
-                    breakpoints={{
-                        
+                    pagination={{
+                        clickable: true,
                     }}
-                    ref={sliderRef}
+                    modules={[Grid]}
+                    className="mySwiper"
+                    breakpoints={{
+                        375: {
+                            grid: {rows: 2, fill: "row"},
+                            modules: [Grid],
+                            slidesPerView: 2,
+                            marginRight: 10,
+                            slidesPerGroup: 2,
+                        },
+                        900: {
+                            slidesPerView: 4,
+                        }
+                    }}
                 >
                     {slides}
-                </Swiper>  
+                </Swiper>
 
                 <IconButton 
                     className={`${carousel.navigation} ${carousel.navigation__prev}`}

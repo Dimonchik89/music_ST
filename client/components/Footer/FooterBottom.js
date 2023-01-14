@@ -10,7 +10,7 @@ const FooterBottom = () => {
         <Box className={footer.bottom}>
             <Box className={`${helper.d__flex} ${helper.align__center} ${helper.justify__center}`}>
                 <Link 
-                    href=""
+                    href="/"
                     className={`${helper.color__yellow} ${helper.fz__24}`}
                 >
                     Got a Claim? Fix it

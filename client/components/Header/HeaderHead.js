@@ -17,21 +17,15 @@ const HeaderHead = ({showPlayer}) => {
     const search = showPlayer ? <Search/> : null
 
     return (
-        <Box
-            className={header.header__inner}
-        >
-            <Box
-                className={`${header.header__item} ${headerStyle}`}
-            >
+        <Box className={header.header__inner}>
+            <Box className={`${header.header__item} ${headerStyle}`}>
                 <picture>
                     <img
                         className={logo.logo}
                         alt="logo"
                     />
                 </picture>
-                
                 {search}
-                
                 <button
                     className={`${button.border_gray_text_yellow} ${header.header__button}`}
                 >

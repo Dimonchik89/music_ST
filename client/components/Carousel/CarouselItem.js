@@ -32,7 +32,7 @@ const CarouselItem = ({slide, allStop, hideHeaderPlayer}) => {
                 />
             </picture>
             <Box className={carousel.carousel__title_wrapper}>
-                <span className={`${text.title} ${helper.color__white} ${helper.text__capitalize}`}>
+                <span className={`${carousel.title}`}>
                     {slide.title}
                 </span>
             </Box>

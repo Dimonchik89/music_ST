@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <>
       <Main/>
-      <Link href="/login">Login</Link>
-      <Link href="/register">Register</Link>
+      {/* <Link href="/login">Login</Link>
+      <Link href="/register">Register</Link> */}
     </>
   )
 }

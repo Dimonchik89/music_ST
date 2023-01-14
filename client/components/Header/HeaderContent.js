@@ -8,18 +8,20 @@ import HeaderPlayer from './HeaderPlayer';
 import { showHeaderPlayer } from '../../store/player/playerSlice';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
-import { selectMusic } from '../../store/actualMusics';
+import { selectMusic, actualMusics } from '../../store/actualMusics';
 
 import text from "../../styles/text.module.scss";
 import header from "../../styles/header.module.scss";
 import helper from "../../styles/helper.module.scss";
 import search from "../../styles/search.module.scss";
 
-const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic}) => {
+const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic, actualMusics}) => {
     const router = useRouter()
-    const id = router.query['sound']
+    const id = router.query.sound
 
     useEffect(() => {
+        // ошибка Link возникает по причине того что сразу в стейт попадают пести из первой категории, а ищится песня по id из второй категории. Нужно помещать в стейт сразу вче песни или сделать доп проверку
+        console.log("id", id);
         if(id) {
             showHeaderPlayer()
             selectMusic(id)
@@ -41,9 +43,11 @@ const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic}) => {
                         >
                             ROYALTY FREE MUSIC FOR VIDEO WITHOUT CLAIMS
                         </h1>
-                        <p className={`${text.subtitle} ${helper.color__white}`}>
-                            100% Claim-Free for any Platforms. Find Your Royalty Free Music Now!
-                        </p>
+                        <Box className={header.subtitle__wrapper}>
+                            <p className={`${text.subtitle} ${helper.color__white}`}>
+                                100% Claim-Free for any Platforms. Find Your Royalty Free Music Now!
+                            </p>
+                        </Box>
                     </Box>
                     <Box
                         className={`${helper.horizontal__center} ${search.search_header__wrapper}`}
@@ -58,6 +62,7 @@ const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic}) => {
 
 const mapStateToProps = createStructuredSelector({
     showPlayer,
+    actualMusics
 })
 
 const mapDispatchToProps = dispatch => ({

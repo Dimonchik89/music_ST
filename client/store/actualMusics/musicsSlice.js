@@ -4,15 +4,18 @@ const initialState = {
     actualMusics: [],
     error: false,
     loading: false,
-    music: null
+    music: null,
+    currentTimeDublicate: 0
 }
+
+// переделать на получение всей музыки с бека и фильтрации е селекторк
 
 const musicsSlice = createSlice({
     name: 'actualMusics',
     initialState,
     reducers: {
         selectMusics: (state, action) => {
-            state.actualMusics = action.payload.map(item => ({...item, progress: 0}))
+            state.actualMusics = action.payload.map(item => ({...item, progress: 0, play: false}))
         },
         togglePlay: (state, action) => {
             state.actualMusics = state.actualMusics.map(item => {
@@ -26,7 +29,7 @@ const musicsSlice = createSlice({
         selectMusic: (state, action) => {
             state.music = state.actualMusics?.find((item) => {
                 if(item.id == action.payload) {
-                    return {...item, progress: 0}
+                    return {...item, progress: 0, play: false}
                 }
             });
         },
@@ -45,11 +48,14 @@ const musicsSlice = createSlice({
             state.actualMusics = state.actualMusics.map(item => ({...item, progress: 0}))
         },
         allStop: (state) => {
-            state.actualMusics = state.actualMusics.map(item => ({...item, play: false, progress: 0}))
+            state.actualMusics = state.actualMusics.map(item => ({...item, play: false}))
+        },
+        cahngeCurrentTimeDublicate: (state, action) => {
+            state.currentTimeDublicate = action.payload
         }
     }
 })
 
 const { actions, reducer } = musicsSlice;
-export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress } = actions;
+export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate } = actions;
 export default reducer;

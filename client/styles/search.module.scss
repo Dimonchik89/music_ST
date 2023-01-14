@@ -3,6 +3,10 @@
 
 .search_header__wrapper {
     margin-top: 6.7rem;
+
+    @include _375 {
+        display: none !important;
+    }
 }
 
 .search {
