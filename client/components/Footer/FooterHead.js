@@ -8,11 +8,11 @@ const FooterHead = () => {
 
     return (
         <Box>
-            <h2 className={`${text.title} ${text.text__center} ${helper.color__white}`}>
+            <h2 className={`${footer.title}`}>
                  Check Out the Latest Royalty Free Music Collections
             </h2>
             <Box className={footer.text__wrapper}>
-                <p className={`${helper.fz__24} ${text.text__center} ${helper.color__white}`}>
+                <p className={`${footer.text}`}>
                     I've compiled themed collections of production music libraries for your media projects, so you don't have to search 
                     endlessly for the perfect track. With TakeTones, all the royalty-free music you need is in one place.
                         Here are four of the latest collections compiled by our experts. Take a listen!

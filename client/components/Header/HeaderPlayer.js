@@ -24,7 +24,7 @@ const HeaderPlayer = ({music}) => {
         >
             <Container maxWidth="xl">
                 <Box>
-                    <Box className={`${helper.d__flex}`}>
+                    <Box className={`${header.player__wrapper}`}>
                         <HeaderPlayerLogo logoPath={music?.logo}/>
                         <HeaderPlayerContent 
                             music={music} 

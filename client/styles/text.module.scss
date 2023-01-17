@@ -24,6 +24,10 @@
     font-weight: 400;
     color: $white;
     line-height: 1.2;
+
+    @include _375 {
+        font-size: .8rem;
+    }
 }
 
 .text__center {

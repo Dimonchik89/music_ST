@@ -6,6 +6,7 @@ import Link from "next/link";
 import helper from "../../styles/helper.module.scss";
 import sound from "../../styles/sound.module.scss";
 
+
 const SoundHead = ({music}) => {
     const [ activeButton, setActiveButton ] = useState(false)
 
@@ -19,7 +20,7 @@ const SoundHead = ({music}) => {
                 className={`${sound.button__share_close}`}
                 onClick={changeButton}
             /> 
-            <Share musicId={music?.id}/>
+            <Share musicId={music?.id} changeButton={changeButton}/>
         </div>
         : <button 
             className={`${sound.button} ${sound.button__share}`}
@@ -28,14 +29,15 @@ const SoundHead = ({music}) => {
 
     return (
         <Box className={sound.head}>
-            <span className={`${helper.fz__24} ${helper.color__white} ${helper.weight__medium}`}>
+            <span className={sound.title}>
                {music?.title}
+               
             </span>
             <Box className={`${helper.d__flex} ${helper.align__center}`}>
                 <button className={`${sound.button} ${sound.button__heart}`}/>
                 {showButton}
                 <Link href={music?.audio} className={`${sound.button__text}`} download target="_blank">
-                    <p>
+                    <p className={sound.text__inner}>
                         Download
                     </p>
                 </Link>

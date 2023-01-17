@@ -6,22 +6,25 @@ import footer from "../../styles/footer.module.scss";
 
 const FooterBottom = () => {
 
+    // const logo = window.screen.width <= 375 ? "../../static/images/Logo_md.png" : "../../static/images/Logo_sm.png";
+
     return (
         <Box className={footer.bottom}>
-            <Box className={`${helper.d__flex} ${helper.align__center} ${helper.justify__center}`}>
+            <Box className={footer.bottom__content}>
                 <Link 
                     href="/"
-                    className={`${helper.color__yellow} ${helper.fz__24}`}
+                    className={footer.link}
                 >
                     Got a Claim? Fix it
                 </Link>
             </Box>
             <Box className={footer.bottom__logo}>
-                <picture>
+                {/* <picture>
                     <img
-                        src="../../static/images/Logo_sm.png"
+                        className={footer.logo}
+                        src={"../../static/images/Logo_sm.png"}
                     />
-                </picture>
+                </picture> */}
             </Box>
         </Box>
     )

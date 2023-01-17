@@ -19,6 +19,10 @@
     align-items: center;
     padding: 1.8rem 2.2rem;
 
+    @include _375 {
+        display: none;
+    }
+
     .input {
         color: $white;
         font-size: 2.4rem;

@@ -9,17 +9,21 @@ import button from "../../styles/button.module.scss"
 import sound from "../../styles/sound.module.scss";
 
 const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButton, focusDownload}) => {
+    const headerStyle = {
+        right: '-2rem',
+        borderRadius: "2rem"
+    }
 
     const showButton = activeButton ? 
-        <div className={sound.button__close_wrapper}>
+        <div className={header.button__close_wrapper}>
             <button 
-                className={`${sound.button__share_close}`}
+                className={` ${button.header__close} ${button.header__square}`}
                 onClick={changeButton}
             /> 
-            <Share musicId={music?.id}/>
+            <Share musicId={music?.id} addedStyle={headerStyle} changeButton={changeButton}/>
         </div>
         : <button 
-            className={`${button.header__square} ${sound.button__share}`}
+            className={`${button.header__square} ${header.button__share}`}
             onClick={changeButton}
         />
 
@@ -47,10 +51,10 @@ const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButto
                 {music?.title}
             </h2>
             <p className={header.subtitle}>Tunebox</p>
-            <Box style={{flex: 1}}>
+            <Box className={header.description__wrapper}>
                 <p className={header.text}>{music?.description}</p>
             </Box>
-            <Box className={helper.d__flex}>
+            <Box className={header.button__group}>
                 <Link
                     download
                     target="_blank"
@@ -64,8 +68,10 @@ const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButto
                         Download
                     </p>
                 </Link>
-                <button className={`${button.header__square} ${button.header__heart}`}/>
-                {showButton}
+                <Box className={helper.d__flex}>
+                    <button className={`${button.header__square} ${button.header__heart}`}/>
+                    {showButton}
+                </Box>
             </Box>
         </Box>
     )

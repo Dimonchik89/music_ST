@@ -1,7 +1,24 @@
 @import "./vars";
+@import "./mixin/mixin.scss";
 
 .container {
     position: relative;
+
+    &::before {
+        content: "";
+        width: 108rem;
+        height: 2px;
+        background: $white;
+        position: absolute;
+        // top: calc(100% - 3.2rem);
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @include _375 {
+            width: 95%;
+        }
+    }
 
     &:after {
         content: "";
@@ -13,6 +30,10 @@
         left: 0;
         right: 0;
         margin: 0 auto;
+
+        @include _375 {
+            width: 95%;
+        }
     }
 
     .wrapper {
@@ -22,21 +43,21 @@
         border-radius: 2rem;
         position: relative;
 
-        &::after {
-            content: "";
-            width: 108rem;
-            height: 2px;
-            background: $white;
-            position: absolute;
-            top: calc(100% - 3.2rem);
-            left: 50%;
-            transform: translateX(-50%);
+        @include _375 {
+            padding: 2.4rem 0 .8rem;
+            background: none;
+            backdrop-filter: none;
         }
 
         .inner {
             width: 100%;
             height: 13rem;
             margin-bottom: 3.2rem;
+
+            @include _375 {
+                height: 11.9rem;
+                margin-bottom: 1.6rem;
+            }
 
             .item {
                 padding: 1.9rem 2rem 1.9rem 2.1rem;
@@ -45,12 +66,21 @@
                 display: flex;
                 align-items: center;
 
+                @include _375 {
+                    padding: 1.8rem;
+                }
+
                 .logo__container {
                     border-radius: 1rem;
                     overflow: hidden;
                     margin-right: 1.9rem;
                     width: 9rem;
                     height: 9rem;
+
+                    @include _375 {
+                        width: 8.3rem;
+                        height: 8.3rem;
+                    }
 
                     .logo {
                         object-fit: contain;
@@ -66,6 +96,18 @@
                         display: flex;
                         justify-content: space-between;
                         height: 2.8rem;
+
+                        .title {
+                            font-size: 2.4rem;
+                            color: $white;
+                            font-weight: 500;
+
+                            @include _375 {
+                                font-size: 1.4rem;
+                                font-weight: 500;
+                                line-height: 2.8rem;
+                            }
+                        }
                     }
                     
                     .scale {
@@ -82,6 +124,17 @@
                             margin-left: 3rem;
                             position: relative;
                             top: 50%;
+
+                            @include _375 {
+                                margin-left: 1.3rem;
+                            }
+
+                            canvas {
+
+                                @include _375 {
+                                    width: 17.3rem !important;
+                                }
+                            }
                         }
                     }
 
@@ -99,10 +152,25 @@
                         align-items: center;
                         justify-content: center;
 
+                        @include _375 {
+                            width: 3rem;
+                            height: 3rem;
+                            background-image: url("../static/icon/download.svg");
+                            background-size: 1.2rem 1.2rem;
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+
                         &:hover {
                             border: none;
                             background-color: $yellow;
                             color: $black;
+                        }
+
+                        .text__inner {
+                            @include _375 {
+                                display: none;
+                            }
                         }
                     }
                 }
@@ -142,6 +210,8 @@
     margin-right: 1.9rem;
     text-align: right;
     position: relative;
+
+    @include _375 {}
 }
 
 .button__share_close {
@@ -161,7 +231,14 @@
     background: url("../static/icon/share-white.svg");
     background-repeat: no-repeat;
     background-position: 50% 50%;
+    background-size: 2.4rem 2.4rem;
     margin-right: 1.9rem;
+
+    @include _375 {
+        width: 3rem;
+        height: 3rem;
+        background-size: 1.4rem 1.1rem;
+    }
 
     &:hover {
         background-image: url("../static/icon/share-black.svg");
@@ -175,6 +252,10 @@
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 2.3rem;
+
+    @include _375 {
+        display: none;
+    }
 
     &:hover {
         background-image: url("../static/icon/heart-black.svg");
@@ -198,7 +279,7 @@
     color: $black;
     position: absolute;
     top: 0;
-    z-index: 10;
+    z-index: 4;
 
     .timer__text {
         color: $black;

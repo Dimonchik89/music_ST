@@ -18,10 +18,7 @@ const SoundContent = ({music, player}) => {
                 <SoundPlayer 
                     music={music} 
                     scale={scale} 
-                    playStyle={button.play} 
-                    pauseStyle={button.pause} 
-                    deltaTimerLeft={10}
-                    deltaHeight={45}
+                    // deltaTimerLeft={10}
                 />  
             </Box>
         </Box>

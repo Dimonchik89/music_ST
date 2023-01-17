@@ -73,6 +73,10 @@
 
     .content_player {
         padding: 6rem 0 6rem;
+
+        @include _375 {
+            padding: 2.4rem 0 5rem;
+        }
     }
 
     .subtitle__wrapper {
@@ -89,6 +93,18 @@
     display: flex;
     align-items: center;
 
+    @include _375 {
+        height: 100%;
+    }
+
+    .player__wrapper {
+        display: flex;
+
+        @include _375 {
+            flex-direction: column;
+        }
+    }
+
     .picture {
         display: block;
         width: 310px;
@@ -96,8 +112,17 @@
         border-radius: 1rem;
         object-fit: cover;
 
+        @include _375 {
+            width: 34.3rem;
+            height: 34.3rem;
+        }
+
         .logo {
             border-radius: 1rem;
+
+            @include _375 {
+                width: 100%;
+            }
         }
     }
 
@@ -105,12 +130,21 @@
         margin-left: 2rem;
         display: flex;
         flex-direction: column;
+
+        @include _375 {
+            margin-left: 0;
+            margin-top: 1.8rem;
+        }
         
         .title {
             font-size: 4.8rem;
             font-weight: bold;
             line-height: 1.2;
             color: $white;
+
+            @include _375 {
+                font-size: 4rem;
+            }
             
         }
 
@@ -120,13 +154,37 @@
             line-height: 1.15;
             color: $white;
             margin-bottom: 2.7rem;
+
+            @include _375 {
+                margin-top: .8rem;
+                font-size: 1.4rem;
+                font-weight: 700;
+                margin-bottom: 1.4rem;
+            }
         }
 
-        .text {
-            font-size: 1.6rem;
-            font-weight: 400;
-            line-height: 1.2;
-            color: $white;
+        .description__wrapper {
+            flex: 1;
+            margin-bottom: 2.4rem;
+
+            .text {
+                font-size: 1.6rem;
+                font-weight: 400;
+                line-height: 1.2;
+                color: $white;
+
+                @include _375 {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+
+        .button__group {
+            display: flex;
+
+            @include _375 {
+                justify-content: space-between;
+            }
         }
     }
 }
@@ -141,13 +199,30 @@
         border-radius: 2rem;
         background: $gray-dark;
 
+        @include _375 {
+            padding: 0;
+            background: transparent;
+            height: 5.1rem;
+        }
+
         .player__scale {
             width: 100%;
             display: flex;
             align-items: center;
             height: 5.2rem;
             overflow: hidden;
-            position: relative
+            position: relative;
+
+            .sound__start {
+                display: flex;
+                align-items: end;
+                height: 100%;
+                margin-left: 2.8rem;
+
+                @include _375 {
+                    margin-left: 0.8rem;
+                }
+            }
         }
 
         .waveform {
@@ -156,10 +231,18 @@
             margin-left: 3rem;
             position: relative;
             top: 50%;
+
+            @include _375 {
+                margin-left: .8rem;
+            }
         }
 
         canvas {
             height: 10.4rem !important;
+
+            @include _375 {
+                width: 23.4rem;
+            }
         }
     }
 }
@@ -171,16 +254,33 @@
     border: 2px solid $white;
     border-radius: 1rem;
     background: url("../static/icon/play-white-big.svg");
+    background-size: 4.3rem 4.3rem;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     cursor: pointer;
+
+    @include _375 {
+        width: 5.1rem;
+        height: 5.1rem;
+        background-size: 2.6rem 2.6rem;
+        border-radius: 2rem;
+    }
 
     &:hover {
         background: url("../static/icon/play-black.svg");
         background-repeat: no-repeat;
         background-position: 50% 50%;
         background-color: $yellow;
+        background-size: 4.3rem 4.3rem;
         border: 2px solid $yellow;
+        cursor: pointer;
+
+        @include _375 {
+            width: 5.1rem;
+            height: 5.1rem;
+            background-size: 2.6rem 2.6rem;
+            border-radius: 2rem;
+        }
     }
 }
 
@@ -192,14 +292,59 @@
     border-radius: 1rem;
     background: url("../static/icon/pause-white.svg");
     background-repeat: no-repeat;
+    background-size: 4.3rem 4.3rem;
     background-position: 48% 50%;
     cursor: pointer;
+
+    @include _375 {
+        width: 5.1rem;
+        height: 5.1rem;
+        background-size: 2.6rem 2.6rem;
+        border-radius: 2rem;
+    }
 
     &:hover {
         background: url("../static/icon/pause-black.svg");
         background-repeat: no-repeat;
         background-position: 48% 50%;
         background-color: $yellow;
+        background-size: 4.3rem 4.3rem;
         border: 2px solid $yellow;
+        cursor: pointer;
+
+        @include _375 {
+            width: 5.1rem;
+            height: 5.1rem;
+            background-size: 2.6rem 2.6rem;
+            border-radius: 2rem;
+        }
+    }
+}
+
+.button__share {
+    background: url("../static/icon/share-white.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 2.4rem 2.4rem;
+    // margin-right: 1.9rem;
+    width: 5.1rem;
+    height: 5.1rem;
+
+    &:hover {
+        background-image: url("../static/icon/share-black.svg");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+}
+
+.button__close_wrapper {
+    width: 5.1rem;
+    height: 5.1rem;
+    margin-right: 1.9rem;
+    text-align: right;
+    position: relative;
+
+    @include _375 {
+        margin-right: 2rem;
     }
 }

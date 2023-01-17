@@ -18,7 +18,7 @@ const formWaveSurferOptions = (ref) => ({
   waveColor: "#7c7c7c",
   progressColor: "#F2D22B",
   cursorColor: "OrangeRed",
-  barWidth: 3,
+  barWidth: window.screen.width <= 375 ? 1 : 3,
   barRadius: 3,
   responsive: true,
   height: 104,
@@ -134,6 +134,8 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
         }
     }
 
+    const marginLeft = window.screen.width <= 375 ? 7 : 48
+
     return (
         <Box className={header.player__music__wrapper}>
             <Box className={header.player__music}>
@@ -145,7 +147,7 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
                         <div 
                             className={header.player__scale}
                         >   
-                            <div className={`${helper.d__flex} ${helper.align__end} ${helper.height__100}`}>
+                            <div className={header.sound__start}>
                                 <span className={helper.color__white}>
                                     0:00
                                 </span>
@@ -154,7 +156,7 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
                             <div
                                 className={sound.timer}
                                 style={{
-                                    left: timerLeft || 10,
+                                    left: timerLeft + marginLeft || 18,
                                 }}
                             >
                                 <p className={sound.timer__text}>

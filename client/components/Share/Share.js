@@ -32,12 +32,12 @@ const shareLink = [
     },
 ]
 
-const Share = ({musicId}) => {
+const Share = ({musicId, changeButton, addedStyle = null}) => {
 
-    const content = shareLink?.map((item, i) => <ShareItem iconPath={item.iconPath} title={item.title} Component={item.Component} musicId={musicId}/>)
+    const content = shareLink?.map((item, i) => <ShareItem changeButton={changeButton} iconPath={item.iconPath} title={item.title} Component={item.Component} musicId={musicId}/>)
 
     return (
-        <Box className={share.share}>
+        <Box className={share.share} style={addedStyle}>
             <Box style={{ textAlign: "start"}}>
                 {content}
             </Box>

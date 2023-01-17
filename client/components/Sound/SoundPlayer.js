@@ -18,7 +18,7 @@ const formWaveSurferOptions = (ref) => ({
   waveColor: "#7c7c7c",
   progressColor: "#F2D22B",
   cursorColor: "OrangeRed",
-  barWidth: 3,
+  barWidth: window.screen.width <=375 ? 1 : 3,
   barRadius: 3,
   responsive: true,
   height: 90,
@@ -26,7 +26,7 @@ const formWaveSurferOptions = (ref) => ({
   partialRender: true,
 });
 
-function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, resetProgress, scale, playStyle, pauseStyle, deltaTimerLeft, deltaHeight, headerMusic, allStop }) {
+function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, headerMusic, allStop }) {
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const [ intervalId, setIntervalId ] = useState(null)
@@ -74,7 +74,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
     }
   }
 
-  const selectButton = music.play ? <ButtonPlay handleClick={handlePause} styleClass={pauseStyle}/> : <ButtonPlay handleClick={handlePlay} styleClass={playStyle}/>;
+  const selectButton = music.play ? <ButtonPlay handleClick={handlePause} styleClass={button.pause}/> : <ButtonPlay handleClick={handlePlay} styleClass={button.play}/>;
 
   useEffect(() => {
     const create = async () => {
@@ -109,7 +109,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
     };
   }, [music?.audio]);
 
-
+  let deltaTimerLeft = window.screen.width <= 375 ? -3 : 10;
   let timerLeft = deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration))
   //----------------------------
   useEffect(() => {
@@ -180,7 +180,6 @@ const mapDispatchToProps = dispatch => ({
   showHeaderPlayer:  bindActionCreators(showHeaderPlayer, dispatch),
   selectMusic: bindActionCreators(selectMusic, dispatch),
   changeProgress: bindActionCreators(changeProgress, dispatch),
-  resetProgress: bindActionCreators(resetProgress, dispatch),
   allStop: bindActionCreators(allStop, dispatch),
 })
 

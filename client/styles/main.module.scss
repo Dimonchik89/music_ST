@@ -1,4 +1,5 @@
 @import "./vars";
+@import "./mixin/mixin.scss";
 
 .main {
     width: 100%;
@@ -6,8 +7,17 @@
     background: url("../static/images/bg.jpg");
     background-size: cover;
     padding-bottom: 11rem;
+    overflow: hidden;
+
+    @include _375 {
+        padding-bottom: 2.2rem;
+    }
 }
 
 .main__carousel {
     margin: 8.1rem 0;
+
+    @include _375{
+        margin: 2.4rem 0;
+    }
 }

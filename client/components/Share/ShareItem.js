@@ -3,10 +3,14 @@ import { Box } from "@mui/material";
 import helper from "../../styles/helper.module.scss";
 import share from "../../styles/share.module.scss";
 
-const ShareItem = ({iconPath, title, Component, musicId}) => {
+const ShareItem = ({iconPath, title, Component, musicId, changeButton}) => {
 
     return (
-        <Component url={`http://localhost:3000?id=${musicId}`} style={{marginBottom: "8px"}}>
+        <Component 
+            url={`http://localhost:3000?id=${musicId}`} 
+            style={{marginBottom: "8px"}}
+            onClick={changeButton}    
+        >
             <Box className={`${helper.d__flex} ${helper.align__center} ${helper.justify__center}`}>
                 <picture>
                     <img
