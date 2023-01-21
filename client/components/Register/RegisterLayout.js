@@ -1,19 +1,18 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { Box } from "@mui/system";
 import register from "../../styles/register.module.scss";
-import Image from 'next/image'
 import RegisterForm from "./RegisterForm";
 import RegisterRoute from "./RegisterRoute";
-import { logoPath, logoPath375 } from "../../imagePath/imagePath";
 import logo from "../../styles/logo.module.scss";
+import HeaderMobile from "../Header/HeaderModile";
+import { mobileMenu, mobileSearch, toggleMobileMenu, toggleMobileSearch } from "../../store/header";
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { connect } from "react-redux";
+import SlideMenu from '../SlideMenu/SlideMenu';
 
-const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, routeStyle, onSubmit}) => {
-    const [width, setWidth] = useState(0)
+const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, routeStyle, onSubmit, mobileMenu, mobileSearch, toggleMobileMenu, toggleMobileSearch}) => {
     const pageRef = useRef(null)
-
-    useEffect(() => {
-        setWidth(pageRef.current.getBoundingClientRect().width)
-    }, [pageRef])
 
     return (
         <Box 
@@ -29,7 +28,13 @@ const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, rou
                                 alt="logo"
                             />
                         </picture>
+                        <HeaderMobile
+                            toggleMobileSearch={toggleMobileSearch}
+                            toggleMobileMenu={toggleMobileMenu}
+                            showMenu={mobileMenu}
+                        />
                     </Box>
+                    <SlideMenu show={mobileMenu} toggleMobileMenu={toggleMobileMenu}/>
                     <RegisterForm title={title} buttonTitle={buttonTitle} onSubmit={onSubmit}/>
                     {children}
                     <RegisterRoute text={text} link={link} linkPath={linkPath} routeStyle={routeStyle}/>
@@ -39,4 +44,14 @@ const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, rou
     )
 }
 
-export default RegisterLayout;
+const mapStateToProps = createStructuredSelector({
+    mobileMenu,
+    mobileSearch
+})
+
+const mapDispatchToProps = dispatch => ({
+    toggleMobileMenu: bindActionCreators(toggleMobileMenu, dispatch),
+    toggleMobileSearch: bindActionCreators(toggleMobileSearch, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterLayout);

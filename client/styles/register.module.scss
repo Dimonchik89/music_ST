@@ -33,27 +33,59 @@
 
                 @include _375 {
                     top: 1.5rem;
-                    left: .4rem;
+                    left: 0rem;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+
+            .text {
+                font-size: 2.4rem;
+                font-weight: 500;
+                line-height: 1.2;
+
+                @include _375 {
+                    font-size: 1.2rem;
                 }
             }
         }
     }
 }
 
+.reset__wrapper {
+    margin-top: 8.1rem;
+
+    @include _375 {
+        display: none;
+    }
+
+    .register__reset__link {
+        height: 2.8rem;
+        display: block;
+
+        @include _375 {
+            display: none;
+        }
+    }
+}
 
 .register__wrapper__register {
     margin-top: 14.1rem;
+
+    @include _375 {
+        margin-top: 5rem;
+    }
 }
 
 .register__wrapper__Login {
     margin-top: 3.2rem;
+
+    @include _375 {
+        margin-top: 5rem;
+    }
 }
 
 .register__route__link__wrapper {
     margin-left: 1rem;
-}
-
-.register__reset__link {
-    height: 2.8rem;
-    display: block;
 }

@@ -27,9 +27,9 @@ const RegisterForm = ({title, buttonTitle, onSubmit}) => {
 
     return (
         <Box>
-            <p className={`${text.title} ${text.text__center} ${form.form__title} ${helper.lineheight__60}`}>{title}</p>
+            <p className={form.form__title}>{title}</p>
             <Box
-                className={helper.mt__81}
+                className={form.form__wrapper}
             >
                 <form
                     className={form.form}
@@ -57,7 +57,7 @@ const RegisterForm = ({title, buttonTitle, onSubmit}) => {
                     />
                     {formik.errors.password ? <div className={error.error} >{formik.errors.password}</div> : null}
                    <Box
-                        className={`${text.text__center} ${helper.mt__81}`}
+                        className={form.button__wrapper}
                    >
                         <button
                             type="submit"

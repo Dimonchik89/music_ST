@@ -35,3 +35,46 @@
         }
     }
 }
+
+
+.mobile__container {
+    display: none;
+    background-image: url("../static/images/bg.jpg");
+    background-size: cover;
+
+    @include _375 {
+        display: block;
+        position: absolute;
+        top: 6.4rem;
+        z-index: 3;
+        width: 100%;
+    }
+
+    .mobile__wrapper {
+        padding: 2.4rem 1.6rem;
+        backdrop-filter: blur(34px);
+
+        .input {
+            width: 100%;
+            height: 3.5rem;
+            border: 1px solid $white;
+            border-radius: 10px;
+            background-color: transparent;
+            color: $white;
+            padding-left: 4rem;
+            background-image: url("../static/icon/search.png");
+            background-size: 1.7rem 1.7rem;
+            background-repeat: no-repeat;
+            background-position: 1.4rem 50%;
+
+            &::placeholder {
+                color: rgba($white, .5);
+            }
+            
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+

@@ -13,7 +13,6 @@ const Search = () => {
 
     const handleSend = (e) => {
         e.preventDefault()
-        console.log("ok");
         setValue("")
     }
 

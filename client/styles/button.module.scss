@@ -12,6 +12,14 @@
     font-weight: 700;
     color: $black;
 
+    @include _375 {
+        width: 18.5rem;
+        height: 3.5rem;
+        border-radius: 1rem;
+
+        font-size: 2rem;
+    }
+
     &:hover {
         background: darken($yellow, 10%);
         transition: all .2s ease-in-out;
@@ -151,4 +159,30 @@
     cursor: pointer;
     position: relative;
     z-index: 10;
+}
+
+.mobile__sm__white {
+    width: 16.7rem;
+    height: 3.5rem;
+    border: 1px solid $white;
+    border-radius: 1rem;
+    color: $white;
+    font-size: 2rem;
+    line-height: 1.15;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.mobile__sm__yellowe {
+    width: 16.7rem;
+    height: 3.5rem;
+    border: none;
+    background: $yellow;
+    border-radius: 1rem;
+    color: $black;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+    cursor: pointer;
+    
 }

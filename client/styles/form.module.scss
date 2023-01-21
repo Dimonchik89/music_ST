@@ -1,46 +1,85 @@
 @import "./vars";
+@import "./mixin/mixin.scss";
 
 .form__title {
     text-transform: capitalize;
+    font-size: 4.8rem;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    line-height: 6rem;
+    color: $white;
+
+    @include _375 {
+        font-size: 4rem;
+    }
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
+.form__wrapper {
+    margin-top: 8.1rem;
 
-    .form__field {
-        border: 2px solid $gray !important;
-        border-radius: 2rem;
-        outline: 0 !important;
-        width: 64rem;
-        height: 5.3rem;
-        padding: 1.2rem 1.9rem;
-        background: inherit;
-        color: $white;
-        line-height: 5.3rem;
-        font-size: 2.4rem;
-
-        &:-webkit-autofill,
-        &:-webkit-autofill:hover,
-        &:-webkit-autofill:focus {
-            -webkit-text-fill-color: rgba($white, 0.5);
-            transition: background-color 5000s ease-in-out 0s;
-            
-        }
-
-        &::placeholder {
-            font-size: 2.4rem;
-            color: rgba($white, 0.5);
-            
-        }
-
-        &:nth-child(2) {
-            margin-top: 3.2rem;
-        }
+    @include _375 {
+        margin-top: 5.1rem;
     }
 
-    
+    .form {
+        display: flex;
+        flex-direction: column;
+
+        .form__field {
+            border: 2px solid $gray !important;
+            border-radius: 2rem;
+            outline: 0 !important;
+            width: 64rem;
+            height: 5.3rem;
+            padding: 1.2rem 1.9rem;
+            background: inherit;
+            color: $white;
+            line-height: 5.3rem;
+            font-size: 2.4rem;
+
+            @include _375 {
+                width: 34.3rem;
+                height: 3.5rem;
+                border-radius: 1rem;
+                font-size: 1.4rem;
+            }
+
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus {
+                -webkit-text-fill-color: rgba($white, 0.5);
+                transition: background-color 5000s ease-in-out 0s;
+                
+            }
+
+            &::placeholder {
+                font-size: 2.4rem;
+                color: rgba($white, 0.5);
+
+                @include _375 {
+                    font-size: 1.4rem;
+                }
+                
+            }
+
+            &:nth-child(2) {
+                margin-top: 3.2rem;
+            }
+        }
+
+        .button__wrapper {
+            margin-top: 8.1rem;
+            text-align: center;
+
+            @include _375 {
+                margin-top: 5rem;
+            }
+        }
+    }
 }
+
+
 
 
 

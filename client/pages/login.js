@@ -1,5 +1,3 @@
-import Link from "next/link"
-import MainContainer from "../components/MainContainer/MainContainer"
 import RegisterLayout from "../components/Register/RegisterLayout"
 import RegisterResetPas from "../components/Register/RegisterResetPass"
 import register from "../styles/register.module.scss";
