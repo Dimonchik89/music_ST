@@ -2,8 +2,9 @@
 
 .logo {
     content:url("../static/images/Logo.png");
-        width: 28.5rem;
-        height: 6.4rem;
+    width: 28.5rem;
+    height: 6.4rem;
+    cursor: pointer;
 
     @include _375 {
         content:url("../static/images/Logo_md.png");

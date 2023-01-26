@@ -2,16 +2,16 @@ import { useState } from "react";
 import { Box } from "@mui/system";
 import { useFormik } from "formik"
 import { validate } from "../../validate/validate";
-import text from "../../styles/text.module.scss";
 import form from "../../styles/form.module.scss";
 import button from "../../styles/button.module.scss";
-import helper from "../../styles/helper.module.scss";
 import error from "../../styles/error.module.scss";
 import { setCookie } from 'cookies-next';
+import { useRouter } from "next/router";
+import useHttp from "../../hooks/useHttp";
 
-const RegisterForm = ({title, buttonTitle, onSubmit}) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+const RegisterForm = ({title, buttonTitle, url}) => {
+    const router = useRouter()
+    const { enterUser } = useHttp(url)
 
     const formik = useFormik({
         initialValues: {
@@ -20,8 +20,21 @@ const RegisterForm = ({title, buttonTitle, onSubmit}) => {
         },
         validate,
         onSubmit: async (values) => {
-            const { data } = await onSubmit(values)
-            setCookie("token", data?.token);
+            console.log(values);
+            await enterUser({email: values.email, password: values.password})
+                .then(data => {
+
+                    if(data.response) {
+                        const { message } = data.response.data
+                        console.log('message', data)
+                        return 
+                    }
+
+                    const { token } = data?.data
+                    console.log('token', data);
+                    setCookie("token", token);
+                    router.push('/')
+                })
         }
     })
 

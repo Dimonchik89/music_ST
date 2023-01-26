@@ -1,11 +1,9 @@
 import RegisterLayout from "../components/Register/RegisterLayout"
 import RegisterResetPas from "../components/Register/RegisterResetPass"
 import register from "../styles/register.module.scss";
-import useHttp from "../hooks/useHttp";
 
 const Login = () => {
-    const { enterUser } = useHttp("user/login")
-
+    
     return (
         <RegisterLayout 
             title="Log In" 
@@ -14,7 +12,7 @@ const Login = () => {
             link="Sign Up"
             linkPath="/register"
             routeStyle={register.register__wrapper__Login}
-            onSubmit={enterUser}
+            url="/user/login"
         >
             <RegisterResetPas/>
         </RegisterLayout>

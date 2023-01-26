@@ -14,6 +14,7 @@ const Register = () => {
             linkPath="/login"
             routeStyle={register.register__wrapper__register}
             onSubmit={enterUser}
+            url="/user/register"
         />
     )
 }

@@ -2,12 +2,15 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import Share from "../Share/Share";
 import Link from "next/link";
+import { handleOpenModal } from "../../store/modal";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { connect } from "react-redux";
 
 import helper from "../../styles/helper.module.scss";
 import sound from "../../styles/sound.module.scss";
 
 
-const SoundHead = ({music}) => {
+const SoundHead = ({music, handleOpenModal}) => {
     const [ activeButton, setActiveButton ] = useState(false)
 
     const changeButton = () => {
@@ -36,7 +39,12 @@ const SoundHead = ({music}) => {
             <Box className={`${helper.d__flex} ${helper.align__center}`}>
                 <button className={`${sound.button} ${sound.button__heart}`}/>
                 {showButton}
-                <Link href={music?.audio} className={`${sound.button__text}`} download target="_blank">
+                <Link 
+                    href={music?.audio} 
+                    className={`${sound.button__text}`} 
+                    download target="_blank"
+                    onClick={() => handleOpenModal()}    
+                >
                     <p className={sound.text__inner}>
                         Download
                     </p>
@@ -45,4 +53,10 @@ const SoundHead = ({music}) => {
         </Box>
     )
 }
-export default SoundHead;
+
+const mapDispatchToProps = dispatch => ({
+    handleOpenModal: bindActionCreators(handleOpenModal, dispatch)
+
+})
+
+export default connect(null, mapDispatchToProps)(SoundHead);

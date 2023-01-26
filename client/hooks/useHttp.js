@@ -1,23 +1,44 @@
 import axios from "axios";
+import { getCookie } from 'cookies-next';
 
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/api/'
+const $host = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL
 })
+
+const $authHost = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    headers: {
+        authorization: `Bearer ${getCookie('token')}`
+    }
+})
+
+// const instance = axios.create({
+//     baseURL: process.env.NEXT_PUBLIC_BASE_URL
+// })
 
 const useHttp = (url) => {
 
     const enterUser = async ({email, password}) => {
         try {
-            const response = await instance.post(url, {
+            const response = await $host.post(url, {
                 email,
                 password
             })
             return response;
         } catch(e) {
-            throw new Error(e)
+            return e
         }
     }
 
-    return { enterUser }
+    const createCategory = async (category) => {
+        try {
+            const response = await $authHost.post(url, category)
+            return await response.data
+        } catch(e) {
+            return e
+        }
+    }
+
+    return { enterUser, createCategory }
 }
 export default useHttp;

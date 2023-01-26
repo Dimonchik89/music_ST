@@ -1,9 +1,7 @@
 export const validate = values => {
    const errors = {};
-   console.log("validate", values);
    if (!values.password) {
      errors.password = 'Required';
-     console.log("errors", errors);
    } else if (values.password?.length < 6) {
      errors.password = 'must be longer than 6 characters';
    }

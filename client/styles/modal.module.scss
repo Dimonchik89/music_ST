@@ -1,0 +1,294 @@
+@import "./vars";
+@import "./mixin/mixin.scss";
+
+.container {
+    width: 108rem;
+    height: 94rem;
+    border: 2px solid $gray;
+    border-radius: 2rem;
+    background-color: rgba($black, .5);
+    backdrop-filter: blur(62px);
+    padding-top: 4.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+
+    @include _375 {
+        width: 100%;
+        height: 80%;
+        padding: 1.6rem;
+        
+        overflow-y: scroll;
+    }
+
+    .header__logo {
+
+        @include _375 {
+            width: 4.5rem;
+            height: 3.1rem;
+        }
+    }
+
+    .title__wrapper {
+        margin-top: 4.4rem;
+
+        @include _375 {
+            margin-top: 1.6rem;
+        }
+
+        .title {
+            font-size: 3.2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            color: $white;
+            text-align: center; 
+
+            @include _375 {
+                font-size: 2.4rem;
+            }
+        }
+    }
+
+    .block {
+        width: 86rem;
+        height: 20.5rem;
+        background: linear-gradient(180deg, #1F1F1F 0%, #242424 100%);
+        border-radius: 20px;
+        position: relative;
+        margin-top: 3rem;
+
+        @include _375 {
+            width: 34.3rem;
+            height: auto;
+        }
+
+
+        .subtitle__wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.8rem 0;
+
+            @include _375 {
+                height: auto;
+            }
+
+            .subtitle {
+                font-size: 2.4rem;
+                font-weight: 700;
+                color: $white;
+                -ms-text-kashida-space: 1.2;
+                text-align: center;
+
+                @include _375 {
+                    font-size: 2rem;
+                }
+            }
+        }
+
+        .youtube__container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4.3rem;
+            position: relative;
+
+            &::before {
+                content: "";
+                width: 68rem;
+                height: 2px;
+                background-color: $gray;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+
+                @include _375 {
+                    width: 50%;
+                }
+            }
+
+            .logo__block {
+                display: flex;
+                align-items: center;
+
+                @include _375 {
+                    display: none;
+                }
+            }
+
+            .button__block {
+
+                @include _375 {
+                    margin: 0 auto;
+                    padding: 5rem 0 2.4rem;
+                }
+            }
+        }
+
+        .text {
+            font-size: 1.6rem;
+            font-weight: 400;
+            line-height: 1.2;
+            color: $white;
+        }
+
+        .info__container {
+            padding: 3.1rem 9.3rem 0;
+            position: relative;
+
+            @include _375 {
+                padding: 5rem 4rem 2rem 2.3rem;
+                margin-top: 0;
+            }
+
+            &::before {
+                content: "";
+                width: 68rem;
+                height: 2px;
+                background-color: $gray;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+
+                @include _375 {
+                    top: 0;
+                    bottom: 100%;
+                    width: 50%;
+                }
+                
+            }
+
+            .info__item {
+                font-size: 1.6rem;
+                font-weight: 700;
+                color: $white;
+                line-height: 1.2;
+
+                @include _375 {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+
+        .youtube__link__container {
+            padding: 0 8.8rem;
+
+            @include _375 {
+                padding: 0 2.4rem 2.4rem;
+            }
+
+            .form {
+                padding: 1.1rem 1.8rem;
+                border: 2px solid $gray;
+                border-radius: 2rem;
+                display: flex;
+
+                @include _375 {
+                    padding: .8rem 0 .8rem 1.1rem;
+                    align-items: center;
+                } 
+
+                .form__logo {
+                    @include _375 {
+                        width: 2.6rem;
+                        height: 1.8rem;
+                    }
+                }
+                
+
+                .input {
+                    margin-left: 1.1rem;
+                    width: 100%;
+                    background: transparent;
+                    border: none;
+                    flex-grow: 1;
+                    font-size: 1.6rem;
+                    font-weight: 400;
+                    line-height: 1.2;
+                    color: $white;
+
+                    @include _375 {
+                        font-size: 1.4rem;
+                    }
+
+                    &:focus {
+                        outline: none;
+                    }
+
+                    &::placeholder {
+                        font-size: 1.6rem;
+                        font-weight: 400;
+                        line-height: 1.2;
+                        color: rgba($white, .5);
+
+                        @include _375 {
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+
+                .submit__wrapper {
+                    display: flex;
+                    align-items: center;
+
+                    @include _375 {
+                        display: none;
+                    }
+
+                    .submit {
+                        margin-right: 1.4rem;
+                        font-size: 2.4rem;
+                        font-weight: 500;
+                        line-height: 1.16;
+                        color: $white;
+                    }
+                }
+            }
+
+            .submit__mobile__wrapper {
+                display: none;
+
+                @include _375 {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 5rem;
+                }
+
+                .submit__mobile {
+                    width: 16.8rem;
+                    height: 5.1rem;
+                    border: 1px solid $white;
+                    border-radius: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    & span {
+                        font-size: 2rem;
+                        font-weight: 700;
+                        color: $white;
+                        line-height: 2.2rem;
+                    }
+                }
+            }
+
+
+        }
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    .field {
+        margin-bottom: 2rem;
+    }
+}

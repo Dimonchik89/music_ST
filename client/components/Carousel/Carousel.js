@@ -10,9 +10,14 @@ import { Grid } from "swiper";
 import helper from "../../styles/helper.module.scss";
 import text from "../../styles/text.module.scss";
 import carousel from "../../styles/carousel.module.scss";
+import { useEffect } from 'react';
 
 const Carousel = ({styleWrapper, category}) => {
     const sliderRef = useRef(null)
+
+    // useEffect(() => {
+    //     console.log(category);
+    // }, [category])
 
     const handlePrev = useCallback(() => {
         if (!sliderRef.current) return;

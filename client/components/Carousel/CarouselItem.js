@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideHeaderPlayer } from '../../store/player/playerSlice';
 
-import helper from "../../styles/helper.module.scss";
-import text from "../../styles/text.module.scss";
 import carousel from "../../styles/carousel.module.scss";
 
 const CarouselItem = ({slide, allStop, hideHeaderPlayer}) => {
@@ -27,13 +25,13 @@ const CarouselItem = ({slide, allStop, hideHeaderPlayer}) => {
         <Box className={carousel.carousel__item} onClick={handleChangeQuery}>
             <picture>
                 <img
-                    src={slide.image}
+                    src={`${process.env.NEXT_PUBLIC_IMG_URL}/${slide.img}`}
                     alt="category"
                 />
             </picture>
             <Box className={carousel.carousel__title_wrapper}>
                 <span className={`${carousel.title}`}>
-                    {slide.title}
+                    {slide.name}
                 </span>
             </Box>
             

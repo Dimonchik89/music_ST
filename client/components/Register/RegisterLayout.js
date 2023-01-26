@@ -10,9 +10,11 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { connect } from "react-redux";
 import SlideMenu from '../SlideMenu/SlideMenu';
+import { useRouter } from "next/router";
 
-const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, routeStyle, onSubmit, mobileMenu, mobileSearch, toggleMobileMenu, toggleMobileSearch}) => {
+const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, routeStyle, mobileMenu, mobileSearch, toggleMobileMenu, toggleMobileSearch, url}) => {
     const pageRef = useRef(null)
+    const router = useRouter()
 
     return (
         <Box 
@@ -22,7 +24,9 @@ const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, rou
             <Box className={register.register__wrapper}>
                 <Box className={register.register__inner}>
                     <Box className={register.register__logo__wrapper}>
-                        <picture>
+                        <picture
+                            onClick={() => router.push('/')}
+                        >
                             <img
                                 className={logo.logo}
                                 alt="logo"
@@ -35,7 +39,7 @@ const RegisterLayout = ({children, title, buttonTitle, text, link, linkPath, rou
                         />
                     </Box>
                     <SlideMenu show={mobileMenu} toggleMobileMenu={toggleMobileMenu}/>
-                    <RegisterForm title={title} buttonTitle={buttonTitle} onSubmit={onSubmit}/>
+                    <RegisterForm title={title} buttonTitle={buttonTitle} url={url}/>
                     {children}
                     <RegisterRoute text={text} link={link} linkPath={linkPath} routeStyle={routeStyle}/>
                 </Box>

@@ -1,19 +1,21 @@
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
-    if(req.method === "OPTIONS") {
+    if(req.method === 'OPTIONS') {
         next()
     }
     try {
-        const token = req.headers.authorization.split(" ")[1]
+        const token = req.headers.authorization.split(' ')[1]
         if(!token) {
-            return res.status(401).json({ message: "Not authorized"})
+            return res.status(401).json({message: 'Не авторизован'})
         }
-        const decode = jwt.verify(token, process.env.TOKEN_KEY)
-        return req.user = decode;
+        
+        const decoded = jwt.verify(token, process.env.TOKEN_KEY)
+        req.user = decoded
         next()
+
     } catch(e) {
-        return res.status(401).json({ message: "Not authorized"})
+        res.status(401).json({message: 'Не авторизован'})
     }
 }
 
