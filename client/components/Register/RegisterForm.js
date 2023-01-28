@@ -31,7 +31,6 @@ const RegisterForm = ({title, buttonTitle, url}) => {
                     }
 
                     const { token } = data?.data
-                    console.log('token', data);
                     setCookie("token", token);
                     router.push('/')
                 })

@@ -17,7 +17,23 @@ const createCategory = async (req, res) => {
     return res.status(200).json(category)
 }
 
+const deleteCategory = async (req, res) => {
+    const {id} = req.params
+    const category = await sequelize.models.category.destroy({where: { id }})
+    return res.json({message: `CetagoryId ${id} delete`})
+}
+
+const changeCategory = async (req, res) => {
+    const {id} = req.params
+    const {...tailData} = req.body
+    const category = await sequelize.models.category.update({...tailData}, { where: { id }})
+    const newCategory = await sequelize.models.category.findOne({where: { id }})
+    return res.json(newCategory)
+}
+
 module.exports = {
     getAllCategory,
-    createCategory
+    createCategory,
+    deleteCategory,
+    changeCategory
 }

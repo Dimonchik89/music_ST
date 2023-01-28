@@ -11,7 +11,7 @@ const checkRoleMiddleware = (req, res, next) => {
         }
         const decode = jwt.verify(token, process.env.TOKEN_KEY)
         if(decode.role !== "ADMIN") {
-            return res.status(403).json({message: "Нет доступа"})
+            return res.status(403).json({message: "No access"})
         }
         req.user = decode;
         next()
