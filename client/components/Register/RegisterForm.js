@@ -2,16 +2,24 @@ import { useState } from "react";
 import { Box } from "@mui/system";
 import { useFormik } from "formik"
 import { validate } from "../../validate/validate";
-import form from "../../styles/form.module.scss";
-import button from "../../styles/button.module.scss";
-import error from "../../styles/error.module.scss";
+import ErrorModal from "../Modal/ErrorModal";
 import { setCookie } from 'cookies-next';
 import { useRouter } from "next/router";
 import useHttp from "../../hooks/useHttp";
 
+import form from "../../styles/form.module.scss";
+import button from "../../styles/button.module.scss";
+import error from "../../styles/error.module.scss";
+
 const RegisterForm = ({title, buttonTitle, url}) => {
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorText, setErrorText] = useState('')
     const router = useRouter()
     const { enterUser } = useHttp(url)
+
+    const errorClose = () => {
+        setErrorModal(false)
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -26,7 +34,9 @@ const RegisterForm = ({title, buttonTitle, url}) => {
 
                     if(data.response) {
                         const { message } = data.response.data
-                        console.log('message', data)
+                        setErrorText(message)
+                        setErrorModal(true)
+                        console.log('message', message)
                         return 
                     }
 
@@ -80,6 +90,7 @@ const RegisterForm = ({title, buttonTitle, url}) => {
                    </Box>
                 </form>
             </Box>
+            <ErrorModal open={errorModal} handleClose={errorClose} text={errorText}/>
         </Box>
     )
 }

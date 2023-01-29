@@ -292,3 +292,11 @@
         margin-bottom: 2rem;
     }
 }
+
+.error__container {
+    background-color: rgba($black, .4);
+    backdrop-filter: blur(34px);
+    border: 2px solid $gray;
+    border-radius: 20px;
+    color: $gray;
+}

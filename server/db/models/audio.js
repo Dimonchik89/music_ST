@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Audio.init({
     name: DataTypes.STRING,
+    description: DataTypes.STRING,
     categoryId: DataTypes.STRING,
     keywords: DataTypes.STRING,
     audio: DataTypes.STRING,

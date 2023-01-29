@@ -10,13 +10,20 @@ import { addUser } from "../../store/user/userSlice";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import jwt_decode from "jwt-decode";
 import AdminHeader from "../../components/Admin/AdminHeader";
+import AdminMusic from "../../components/Admin/AdminMusic";
 
 import admin from "../../styles/admin.module.scss";
 
-const Admin = ({role, checkRole, addUser}) => {
+const Admin = ({role, checkRole, addUser, music}) => {
     const [showCategory, setShowCategory] = useState(false)
     const [createSong, setCreateSong] = useState(false)
     const router = useRouter()
+
+    useEffect(() => {
+        if(checkRole?.token && jwt_decode(checkRole?.token).role !== "ADMIN") {
+            router.push('/')
+        }
+    }, [])
 
     useEffect(() => {
         if(checkRole?.token) {
@@ -35,18 +42,18 @@ const Admin = ({role, checkRole, addUser}) => {
         setShowCategory(false)
     }
 
-    useEffect(() => {
-        if(checkRole?.token && jwt_decode(checkRole?.token).role !== "ADMIN") {
-            router.push('/')
-        }
-    }, [])
+    const content = music?.rows?.map(item => {
+        return JSON.stringify(item, null, 2)
+    })
 
     return (
         <>
         <AdminHeader/>
             <Container>
                 <Box className={admin.container}>
-                    <Button 
+                    <AdminMusic music={music}/>
+                    {content}
+                    {/* <Button 
                         variant="outlined"
                         onClick={openCategoryModal}    
                     >
@@ -54,7 +61,7 @@ const Admin = ({role, checkRole, addUser}) => {
                     </Button>
                     <Button variant="outlined">
                         Create Song
-                    </Button>
+                    </Button> */}
                 </Box>
             </Container>
             <ModalCreateCategory 
@@ -78,15 +85,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(Admin)
 
 export async function getServerSideProps({req, res}) {
     const responseChekRole = await fetch(`${process.env.BASE_URL}/user/auth`, {
-    headers: {
-      'authorization': `${unescape(encodeURIComponent(`Bearer ${getCookie('token', { req, res })}`))}`
-    }
-  })
+        headers: {
+        'authorization': `${unescape(encodeURIComponent(`Bearer ${getCookie('token', { req, res })}`))}`
+        }
+    })
   const checkRole = await responseChekRole.json()
+
+  const responseMusic = await fetch(`${process.env.BASE_URL}/music`)
+  const music = await responseMusic.json()
+  console.log("music", music);
 
   return {
     props: {
-        checkRole
+        checkRole,
+        music
     }
   }
 }

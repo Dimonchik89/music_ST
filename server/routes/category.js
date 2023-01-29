@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const { getAllCategory, createCategory, deleteCategory, changeCategory } = require("../controllers/category");
 const { checkRoleMiddleware } = require("../middleware/checkRoleMiddleware")
-// const multer  = require('multer')
-// const upload = multer()
 
 const router = new Router();
 

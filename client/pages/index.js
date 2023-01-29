@@ -31,7 +31,7 @@ const Home = ({category, checkRole, addAllCategory, selectActualCategoryId, addU
   return (
     <>
       <Main/>
-      <Link href="/admin">Admin</Link>
+      {/* <Link href="/admin">Admin</Link> */}
       {/* <Link href="/register">Register</Link> */}
     </>
   )
