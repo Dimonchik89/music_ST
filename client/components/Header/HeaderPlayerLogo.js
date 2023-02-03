@@ -9,7 +9,7 @@ const HeaderPlayerLogo = ({logoPath}) => {
             <picture className={header.picture}>
                 <img
                     className={header.logo}
-                    src={logoPath}
+                    src={`${process.env.NEXT_PUBLIC_IMG_URL}${logoPath}`}
                 />
             </picture>
         </Box>

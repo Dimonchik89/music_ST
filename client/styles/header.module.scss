@@ -131,6 +131,7 @@
             font-weight: bold;
             line-height: 1.2;
             color: $white;
+            text-transform: capitalize;
 
             @include _375 {
                 font-size: 4rem;

@@ -22,6 +22,8 @@
     right: -6rem;
 }
 
+
+
 .carousel__item {
     position: relative;
     border-radius: 2rem;
@@ -52,4 +54,8 @@
             }
         }
     }
+}
+
+.active {
+    border-color: $yellow;
 }

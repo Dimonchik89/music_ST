@@ -124,9 +124,27 @@ const update = async (req, res) => {
     }
 } 
 
+const download = async (req, res) => {
+    try {
+        const {filename} = req.query
+        console.log("filename", filename);
+        const pathToSharedDirectory = path.resolve(__dirname, "..", "static")
+        const filePath = pathToSharedDirectory + '/' + filename
+        console.log('filePath', filePath);
+        if(fs.existsSync(filePath))
+        return res.download(filePath, (err) => {
+            console.log('err', err)
+        });
+    } catch(e) {
+        return res.status(500).json({message: "Download error"})
+    }
+
+}
+
 module.exports = {
     create,
     getAll,
     deleteAudio,
-    update
+    update,
+    download
 }

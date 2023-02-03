@@ -7,7 +7,7 @@ const ShareItem = ({iconPath, title, Component, musicId, changeButton}) => {
 
     return (
         <Component 
-            url={`http://localhost:3000?id=${musicId}`} 
+            url={`${process.env.NEXT_PUBLIC_PAGE_URL}?id=${musicId}`} 
             style={{marginBottom: "8px"}}
             onClick={changeButton}    
         >

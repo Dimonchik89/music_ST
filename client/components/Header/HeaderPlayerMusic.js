@@ -6,6 +6,7 @@ import ButtonPlay from '../Button/ButtonPlay';
 import { togglePlay, changeProgress, cahngeCurrentTimeDublicate } from "../../store/actualMusics";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { connect } from "react-redux";
+import { generateMusicLink } from "../../api/playApi";
 
 import helper from "../../styles/helper.module.scss";
 import header from "../../styles/header.module.scss";
@@ -24,6 +25,16 @@ const formWaveSurferOptions = (ref) => ({
   height: 104,
   normalize: true,
   partialRender: true,
+    xhr: {
+        cache: "default",
+        mode: "no-cors",
+        method: "GET",
+        credentials: "include",
+        headers: [
+            { key: "cache-control", value: "no-cache" },
+            { key: "pragma", value: "no-cache" }
+        ]
+        }
 });
 
 const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTimeDublicate}) => {
@@ -77,7 +88,8 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
             const options = formWaveSurferOptions(waveformRef.current);
 
             wavesurfer.current = WaveSurfer.create(options);
-            wavesurfer.current.load(music?.audio);
+            const musicUrl = await generateMusicLink(music?.audio)
+            wavesurfer.current.load(musicUrl);
 
             wavesurfer.current.on("audioprocess", function () {
                 const currentTime = wavesurfer.current.getCurrentTime();

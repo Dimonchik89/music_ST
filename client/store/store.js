@@ -13,7 +13,7 @@ const store = configureStore({
         header,
         modal,
         user,
-        category
+        category,
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware()
 })

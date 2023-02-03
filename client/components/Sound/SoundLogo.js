@@ -9,7 +9,7 @@ const SoundLogo = ({iconPath}) => {
             <picture>
                 <img
                     className={sound.logo}
-                    src={iconPath}
+                    src={`${process.env.NEXT_PUBLIC_IMG_URL}${iconPath}`}
                     alt="logo"
                 />
             </picture>

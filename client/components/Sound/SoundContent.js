@@ -5,7 +5,7 @@ import helper from "../../styles/helper.module.scss";
 import text from "../../styles/text.module.scss";
 import button from "../../styles/button.module.scss"
 
-const SoundContent = ({music, player}) => {
+const SoundContent = ({music}) => {
 
     const scale = {width: "100%", display: "flex", alignItems: "center", height: "45px", overflow: "hidden", position: "relative"}
 
@@ -18,7 +18,6 @@ const SoundContent = ({music, player}) => {
                 <SoundPlayer 
                     music={music} 
                     scale={scale} 
-                    // deltaTimerLeft={10}
                 />  
             </Box>
         </Box>

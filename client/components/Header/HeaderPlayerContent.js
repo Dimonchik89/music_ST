@@ -2,13 +2,17 @@ import { Box } from "@mui/material"
 import Image from "next/image";
 import Link from "next/link";
 import Share from "../Share/Share";
+import { downloadMusic } from "../../api/downloadApi";
+import { handleOpenModal } from "../../store/modal";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { connect } from "react-redux";
 
 import helper from "../../styles/helper.module.scss"
 import header from "../../styles/header.module.scss"
 import button from "../../styles/button.module.scss"
 import sound from "../../styles/sound.module.scss";
 
-const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButton, focusDownload}) => {
+const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButton, focusDownload, handleOpenModal}) => {
     const headerStyle = {
         right: '-2rem',
         borderRadius: "2rem"
@@ -46,20 +50,23 @@ const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButto
         />
 
     return (
+        <>
+        
         <Box className={header.content}>
             <h2 className={header.title}>
-                {music?.title}
+                {music?.name}
             </h2>
             <p className={header.subtitle}>Tunebox</p>
             <Box className={header.description__wrapper}>
                 <p className={header.text}>{music?.description}</p>
             </Box>
             <Box className={header.button__group}>
-                <Link
-                    download
-                    target="_blank"
-                    className={`${button.header__download} ${downloadStyle}`}
-                    href={music?.audio}
+                <button 
+                    className={`${button.header__download} ${downloadStyle}`} 
+                    onClick={(e) => {
+                        handleOpenModal()
+                        downloadMusic({e, music})
+                    }}
                     onMouseEnter={() => setFocusDownload(true)}
                     onMouseLeave={() => setFocusDownload(false)}
                 >
@@ -67,13 +74,19 @@ const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButto
                     <p>
                         Download
                     </p>
-                </Link>
+                </button>
                 <Box className={helper.d__flex}>
                     <button className={`${button.header__square} ${button.header__heart}`}/>
                     {showButton}
                 </Box>
             </Box>
         </Box>
+        </>
     )
 }
-export default HeaderPlayerContent
+
+const mapDispatchToProps = dispatch => ({
+    handleOpenModal: bindActionCreators(handleOpenModal, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(HeaderPlayerContent)

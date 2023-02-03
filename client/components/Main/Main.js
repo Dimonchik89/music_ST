@@ -45,10 +45,6 @@ import { useEffect } from 'react';
 
 const Main = ({showPlayer, allCategory}) => {
 
-    useEffect(() => {
-        console.log("main",allCategory);
-    }, [allCategory])
-
     return (
         <Box className={main.main}>
             <Header/>

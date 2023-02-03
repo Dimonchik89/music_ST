@@ -6,11 +6,12 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 import { useRouter } from "next/router";
 import { getCookie, setCookie } from 'cookies-next';
 import { addUser } from "../store/user/userSlice";
+import { selectMusics } from "../store/actualMusics";
 
 import Link from "next/link";
 import styles from '../styles/Home.module.scss'
 
-const Home = ({category, checkRole, addAllCategory, selectActualCategoryId, addUser}) => {
+const Home = ({category, checkRole, serverAudio, addAllCategory, selectActualCategoryId, addUser, selectMusics}) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -21,12 +22,16 @@ const Home = ({category, checkRole, addAllCategory, selectActualCategoryId, addU
   }, [checkRole])
 
   useEffect(() => {
-    selectActualCategoryId(+router.query.category || category[0]?.id)
+    selectActualCategoryId(+router.query.categoryId || category[0]?.id)
   }, [router])
 
   useEffect(() => {
     addAllCategory(category);
   }, [category])
+
+  useEffect(() => {
+    selectMusics(serverAudio)
+  }, [serverAudio])
 
   return (
     <>
@@ -41,6 +46,15 @@ const Home = ({category, checkRole, addAllCategory, selectActualCategoryId, addU
 export async function getServerSideProps({req, res, query}) {
   const categoryResponse = await fetch(`${process.env.BASE_URL}/category`)
   const category = await categoryResponse.json()
+  let serverAudio;
+
+  if(query.categoryId) {
+    const audioResponse = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams(query))
+    serverAudio = await audioResponse.json()
+  } else {
+    const audioResponse = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams({categoryId: "1"}))
+    serverAudio = await audioResponse.json()
+  }  
 
   const responseChekRole = await fetch(`${process.env.BASE_URL}/user/auth`, {
     headers: {
@@ -51,7 +65,8 @@ export async function getServerSideProps({req, res, query}) {
   return {
     props: {
       category,
-      checkRole
+      checkRole,
+      serverAudio
     }
   }
 }
@@ -59,7 +74,8 @@ export async function getServerSideProps({req, res, query}) {
 const mapDispatchToProps = dispatch => ({
   addAllCategory: bindActionCreators(addAllCategory, dispatch),
   selectActualCategoryId: bindActionCreators(selectActualCategoryId, dispatch),
-  addUser: bindActionCreators(addUser, dispatch)
+  addUser: bindActionCreators(addUser, dispatch),
+  selectMusics: bindActionCreators(selectMusics, dispatch),
 })
 
 export default connect(null, mapDispatchToProps)(Home)

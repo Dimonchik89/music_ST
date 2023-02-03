@@ -204,8 +204,9 @@
                 
 
                 .input {
+                    display: block;
                     margin-left: 1.1rem;
-                    width: 100%;
+                    // width: 100%;
                     background: transparent;
                     border: none;
                     flex-grow: 1;
@@ -284,14 +285,14 @@
     }
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
+// .form {
+//     display: flex;
+//     flex-direction: column;
 
-    .field {
-        margin-bottom: 2rem;
-    }
-}
+//     .field {
+//         margin-bottom: 2rem;
+//     }
+// }
 
 .error__container {
     background-color: rgba($black, .4);

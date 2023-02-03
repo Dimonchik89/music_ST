@@ -8,10 +8,12 @@ import { showHeaderPlayer } from "../../store/player/playerSlice";
 import { selectMusic } from "../../store/actualMusics";
 import { createStructuredSelector } from 'reselect';
 import { music } from "../../store/actualMusics";
+import { generateMusicLink } from "../../api/playApi";
 
 import helper from "../../styles/helper.module.scss";
 import button from "../../styles/button.module.scss";
 import sound from "../../styles/sound.module.scss";
+import Link from "next/link";
 
 const formWaveSurferOptions = (ref) => ({
   container: ref,
@@ -19,12 +21,24 @@ const formWaveSurferOptions = (ref) => ({
   progressColor: "#F2D22B",
   cursorColor: "OrangeRed",
   barWidth: window.screen.width <=375 ? 1 : 3,
+  barWidth: 3,
   barRadius: 3,
   responsive: true,
   height: 90,
   normalize: true,
   partialRender: true,
+  xhr: {
+        responseType: "arraybuffer",
+        mode: "no-cors",
+        dest: "audio",
+        redirect: "follow"
+      },
+  // backend: "MediaElement",
+  normalize: true,
+  preload: true,
+  hideScrollbar: true
 });
+
 
 function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, headerMusic, allStop }) {
   const waveformRef = useRef(null);
@@ -32,6 +46,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
   const [ intervalId, setIntervalId ] = useState(null)
   const [ duration, setDuration ] = useState(0)
   const router = useRouter();
+  const [timerLeft, setTimerLeft] = useState(0)
 
   const handleChangeProgress = () => {
     changeProgress(wavesurfer?.current?.getCurrentTime())
@@ -39,30 +54,22 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
 
   const handlePlay = () => {
       if(music.id != headerMusic?.id) {
-        allStop()
-      }
-      if(headerMusic?.id !== music.id) {
-        selectMusic(music.id)
-        showHeaderPlayer()
         router.push({ 
           pathname: '/', 
           query: { ...router.query, sound: music.id } }, 
           undefined, 
-          {scroll: false}
+          {scroll: false, shallow: true}
         )
+        // allStop()
+        selectMusic(music.id)
+        // showHeaderPlayer()
+        
       }
-      
       togglePlay(music.id)
-      
-      // wavesurfer.current.play();
-      
-    // setIntervalId(setInterval(handleChangeProgress, 100))
   }
 
   const handlePause = () => {
       togglePlay(music.id)
-      // wavesurfer.current.pause();
-      // clearInterval(intervalId)
   }
 
   const clickOntimeScale = () => {
@@ -83,7 +90,13 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
       const options = formWaveSurferOptions(waveformRef.current);
 
       wavesurfer.current = WaveSurfer.create(options);
-      wavesurfer.current.load(music?.audio);
+
+      // const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}music/download?filename=${music.audio}`)
+      // const blob = await response.blob()
+      // const downloadUrl = window.URL.createObjectURL(blob)
+      const musicUrl = await generateMusicLink(music.audio)
+
+      wavesurfer.current.load(musicUrl);
 
       wavesurfer.current.on("audioprocess", function () {
         const currentTime = wavesurfer.current.getCurrentTime();
@@ -110,7 +123,13 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
   }, [music?.audio]);
 
   let deltaTimerLeft = window.screen.width <= 375 ? -3 : 10;
-  let timerLeft = deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration))
+  // let timerLeft = deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration))
+
+  useEffect(() => {
+      setTimerLeft(deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration)))
+
+  }, [music?.progress])
+
   //----------------------------
   useEffect(() => {
     wavesurfer?.current?.setCurrentTime(music?.progress)
@@ -145,6 +164,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
     }
   }
 
+
   return (
     <>
       <div className={`${helper.d__flex} ${helper.align__end} ${helper.height__100}`}>
@@ -157,7 +177,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
         <div
           className={sound.timer}
           style={{
-            left: timerLeft || 0,
+            left: `${timerLeft}px`,
           }}
         >
           <p className={sound.timer__text}>

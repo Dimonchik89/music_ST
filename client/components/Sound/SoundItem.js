@@ -9,7 +9,7 @@ const SoundItem = ({music}) => {
     return (
         <Box className={sound.inner}>
             <Box className={sound.item}>
-                <SoundLogo iconPath={music?.logo}/>
+                <SoundLogo iconPath={music?.img}/>
 
                 <Box className={sound.content}>
                     <SoundHead music={music}/>

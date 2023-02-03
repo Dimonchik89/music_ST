@@ -5,7 +5,8 @@ const initialState = {
     error: false,
     loading: false,
     music: null,
-    currentTimeDublicate: 0
+    currentTimeDublicate: 0,
+    allCount: 0
 }
 
 // переделать на получение всей музыки с бека и фильтрации е селекторк
@@ -15,7 +16,8 @@ const musicsSlice = createSlice({
     initialState,
     reducers: {
         selectMusics: (state, action) => {
-            state.actualMusics = action.payload.map(item => ({...item, progress: 0, play: false}))
+            state.actualMusics = action.payload.rows?.map(item => ({...item, progress: 0, play: false}));
+            state.allCount = action.payload.count;
         },
         togglePlay: (state, action) => {
             state.actualMusics = state.actualMusics.map(item => {
@@ -29,7 +31,8 @@ const musicsSlice = createSlice({
         selectMusic: (state, action) => {
             state.music = state.actualMusics?.find((item) => {
                 if(item.id == action.payload) {
-                    return {...item, progress: 0, play: false}
+                    // return {...item, progress: 0, play: false}
+                    return {...item, play: false}
                 }
             });
         },

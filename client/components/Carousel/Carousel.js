@@ -1,33 +1,21 @@
 import { useCallback, useRef } from 'react';
 import { Box } from '@mui/system';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from "swiper";
 import { IconButton } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CarouselItem from './CarouselItem';
 import { Grid } from "swiper";
 
-import helper from "../../styles/helper.module.scss";
-import text from "../../styles/text.module.scss";
 import carousel from "../../styles/carousel.module.scss";
-import { useEffect } from 'react';
+
+SwiperCore.use([Navigation]);
 
 const Carousel = ({styleWrapper, category}) => {
     const sliderRef = useRef(null)
-
-    // useEffect(() => {
-    //     console.log(category);
-    // }, [category])
-
-    const handlePrev = useCallback(() => {
-        if (!sliderRef.current) return;
-        sliderRef.current.swiper.slidePrev();
-    })
-
-    const handleNext = useCallback(() => {
-        if (!sliderRef.current) return;
-        sliderRef.current.swiper.slideNext();
-    }, []);
+    const navigationPrevRef = useRef(null)
+    const navigationNextRef = useRef(null)
 
     const slides = category?.map((item, i) => (
         <SwiperSlide key={i} style={{merginRight: 0}}>
@@ -41,8 +29,16 @@ const Carousel = ({styleWrapper, category}) => {
                 <Swiper
                     slidesPerView={2}
                     spaceBetween={20}
-                    pagination={{
-                        clickable: true,
+                    // pagination={{
+                    //     clickable: true,
+                    // }}
+                    navigation={{
+                        prevEl: navigationPrevRef.current,
+                        nextEl: navigationNextRef.current,
+                    }}
+                    onBeforeInit={(swiper) => {
+                        swiper.params.navigation.prevEl = navigationPrevRef.current;
+                        swiper.params.navigation.nextEl = navigationNextRef.current;
                     }}
                     modules={[Grid]}
                     className="mySwiper"
@@ -63,14 +59,14 @@ const Carousel = ({styleWrapper, category}) => {
                 </Swiper>
 
                 <IconButton 
+                    ref={navigationPrevRef}
                     className={`${carousel.navigation} ${carousel.navigation__prev}`}
-                    onClick={handlePrev}
                 > 
                     <ArrowBackIosNewIcon color="white"/>
                 </IconButton>
                 <IconButton 
+                    ref={navigationNextRef}
                     className={`${carousel.navigation} ${carousel.navigation__next}`}
-                    onClick={handleNext}
                 > 
                     <ArrowForwardIosIcon color="white"/>
                 </IconButton>
