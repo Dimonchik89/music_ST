@@ -1,29 +1,96 @@
+import { useState } from "react";
 import { Typography, Box, Button } from "@mui/material"
+import { removeCategory } from "../../store/category";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { connect } from "react-redux";
+import useHttp from "../../hooks/useHttp";
+import ErrorModal from "../Modal/ErrorModal";
+import ModalCategoryUpdate from "../Modal/ModalCategory/ModalCategoryUpdate";
+import AlertMessage from '../AlertMessage/AlertMessage';
 
 import admin from "../../styles/admin.module.scss";
 
-const AdminCategoryItem = ({category}) => {
+const AdminCategoryItem = ({category, removeCategory}) => {
+    const { deleteData } = useHttp(`category/${category.id}`)
+    const [errorModal, setErrorModal] = useState(false)
+    const [updateModal, setUpdateModal] = useState(false)
+    const [showAlert, setShowAlert] = useState({show: false, status: null, text: ""})
+
+    const deleteCategory = async () => {
+        const response = await deleteData()
+        if(response.status === 200) {
+            removeCategory(category.id)
+        } else {
+            setErrorModal(true)
+        }
+    }
+
+    const handleOpenAlert = ({status, text}) => {
+        setShowAlert(prev => ({status, show: true, text}))
+    }
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setShowAlert(prev => ({...prev, show: false}));
+    }
+
+    const handleCloseErrorModal = () => {
+        setErrorModal(false)
+    }
+
+    const handleOpenUpdateModal = () => {
+        setUpdateModal(true)
+    }
+
+    const handleCloseUpdateModal = () => {
+        setUpdateModal(false)
+    }
 
     return (
-        <Box className={admin.category__item__container}>
-            <picture>
-                <img
-                    className={admin.image}
-                    src={`${process.env.NEXT_PUBLIC_IMG_URL}category/${category.img}`}
-                    alt=""
-                />
-            </picture>
-            <Typography
-                variant="h6"
-                component="p"
-                className={admin.text}
-            >
-                {category.name}
-            </Typography>
-            <Button variant="outlined">
-                Delete
-            </Button>
-        </Box>
+        <>
+            <Box className={admin.category__item}>
+                <picture>
+                    <img
+                        className={admin.image}
+                        src={`${process.env.NEXT_PUBLIC_IMG_URL}${category.img}`}
+                        alt={category.name}
+                    />
+                </picture>
+                <Typography
+                    variant="h6"
+                    component="p"
+                    className={admin.text}
+                >
+                    {category.name}
+                </Typography>
+                <Box style={{marginRight: "2rem"}}>
+                    <Button 
+                        variant="outlined"
+                        onClick={handleOpenUpdateModal}
+                    >
+                        Update
+                    </Button>
+                </Box>
+                <Button 
+                    variant="outlined"
+                    color="error"
+                    onClick={deleteCategory}
+                >
+                    Delete
+                </Button>
+            </Box>
+            <ErrorModal open={errorModal} handleClose={handleCloseErrorModal} text="category not deleted, try later"/>
+            <ModalCategoryUpdate open={updateModal} handleClose={handleCloseUpdateModal} category={category} handleOpenAlert={handleOpenAlert}/>
+            <AlertMessage handleClose={handleCloseAlert} open={showAlert.show} status={showAlert.status} text={showAlert.text}/>
+        </>
+
     )
 }
-export default AdminCategoryItem
+
+const mapDispatchToProps = dispatch => ({
+    removeCategory: bindActionCreators(removeCategory, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(AdminCategoryItem)

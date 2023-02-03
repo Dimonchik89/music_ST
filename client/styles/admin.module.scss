@@ -1,31 +1,41 @@
+@import "./vars";
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 5rem;
-
-
 }
 
 .category__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin-top: 3rem;
 
-    .category__item__container {
-        width: 50rem;
+    .category__wrapper {
         display: flex;
+        flex-direction: column;
+        align-items: center;
 
-        .image {
-            width: 8rem;
+        .category__item {
+            width: 75%;
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            border-bottom: 1px solid $gray;
+            border-top: 1px solid $gray;
 
+            .image {
+                width: 8rem;
+
+            }
+
+            .text {
+                flex-grow: 1;
+                text-align: center;
+                font-size: 2rem;
+                text-transform: capitalize;
+            }
+            
         }
-
-        .text {
-            flex-grow: 1;
-            text-align: center;
-        }
-        
     }
 }
+

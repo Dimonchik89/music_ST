@@ -1,4 +1,4 @@
-import { useState, } from "react";
+import { useState, useEffect } from "react";
 import { Box, Container } from "@mui/system";
 import { createStructuredSelector } from 'reselect';
 import { connect } from "react-redux";
@@ -6,16 +6,39 @@ import { music } from "../../store/actualMusics";
 import HeaderPlayerLogo from "./HeaderPlayerLogo";
 import HeaderPlayerContent from "./HeaderPlayerContent";
 import HeaderPlayerMusic from "./HeaderPlayerMusic";
+import CloseIcon from '@mui/icons-material/Close';
+import {useRouter} from "next/router"
+import { hideHeaderPlayer } from "../../store/player/playerSlice";
+import { bindActionCreators } from "@reduxjs/toolkit";
 
-import helper from "../../styles/helper.module.scss"
 import header from "../../styles/header.module.scss"
+import { IconButton } from "@mui/material";
 
-const HeaderPlayer = ({music}) => {
+const HeaderPlayer = ({music, hideHeaderPlayer}) => {
     const [ focusDownload, setFocusDownload ] = useState(false)
     const [ activeButton, setActiveButton ] = useState(false)
+    const router = useRouter()
 
     const changeButton = () => {
         setActiveButton(prev => !prev)
+    }
+
+    useEffect(() => {
+        console.log('router', router);
+    }, [router])
+
+    const closeHeaderPlayer = () => {
+        let newQuery = {};
+        for(let key in router.query) {
+            if(key !== 'sound') {
+                newQuery[key] = router.query[key]
+            }
+        }
+        router.push({
+            pathname: '/',
+            query: newQuery
+        }, undefined, {shallow: true})
+        hideHeaderPlayer()
     }
 
     return (
@@ -37,6 +60,12 @@ const HeaderPlayer = ({music}) => {
                     <HeaderPlayerMusic music={music}/>
                 </Box>
             </Container>
+            <IconButton 
+                className={header.close}
+                onClick={closeHeaderPlayer}    
+            >
+                <CloseIcon color="white" fontSize="large"/>
+            </IconButton>
         </Box>
     )
 }
@@ -45,4 +74,8 @@ const mapStateToProps = createStructuredSelector({
     music
 })
 
-export default connect(mapStateToProps)(HeaderPlayer);
+const mapDispatchToProps = dispatch => ({
+    hideHeaderPlayer: bindActionCreators(hideHeaderPlayer, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderPlayer);

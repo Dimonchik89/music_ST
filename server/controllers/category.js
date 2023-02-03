@@ -9,12 +9,12 @@ const getAllCategory = async (req, res) => {
 }
 
 const createCategory = async (req, res) => {
-    const { name } = req?.body
-    const { img } = req?.files
+    const { name } = req.body
+    const { img } = req.files
     const fileExtension = img.name.split(".").pop()
     let fileName = uuid.v4() + `.${fileExtension}`
     img.mv(path.resolve(__dirname, "..", "static/category", fileName))
-    const category = await sequelize.models.category.create({name, img: fileName})
+    const category = await sequelize.models.category.create({name, img: `category/${fileName}`})
     return res.status(200).json(category)
 }
 
@@ -28,7 +28,7 @@ const deleteCategory = async (req, res) => {
     if(!category) {
         return res.json({message: "Cetagory is not defined"})
     }
-    fs.unlink(path.resolve(__dirname, "..", "static/category", category.img), async err => {
+    fs.unlink(path.resolve(__dirname, "..", "static", category.img), async err => {
         if(err) throw err;
         const deletedCategory = await sequelize.models.category.destroy({where: { id }})
         return res.json({message: `CetagoryId ${id} delete`})
@@ -53,12 +53,12 @@ const changeCategory = async (req, res) => {
     }
 
     if(img) {
-        fs.unlink(path.resolve(__dirname, "..", "static/category", category.img), async err => {
+        fs.unlink(path.resolve(__dirname, "..", "static", category.img), async err => {
             if(err) throw err
             const fileExtension = img.name.split(".").pop()
             let fileName = uuid.v4() + `.${fileExtension}`
             img.mv(path.resolve(__dirname, "..", "static/category", fileName))
-            const updateCategory = await sequelize.models.category.update({...tailData, img: fileName}, { where: { id }})
+            const updateCategory = await sequelize.models.category.update({...tailData, img: `category/${fileName}`}, { where: { id }})
             const newCategory = await sequelize.models.category.findOne({where: { id }})
             return res.json(newCategory)
         })

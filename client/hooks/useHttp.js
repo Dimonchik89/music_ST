@@ -44,6 +44,33 @@ const useHttp = (url) => {
         return response
     }
 
-    return { enterUser, createCategory, downloadFile }
+    const deleteData = async () => {
+        try {
+            const data = await $authHost.delete(`${process.env.NEXT_PUBLIC_BASE_URL}${url}`)
+            return data
+        } catch(e) {
+            return e
+        }
+    }
+
+    const postData = async (body) => {
+        try {
+            const data = await $authHost.post(`${process.env.NEXT_PUBLIC_BASE_URL}${url}`, body)
+            return data
+        } catch(e) {
+            return e
+        }
+    }
+
+    const updateData = async (body) => {
+        try {
+            const data = await $authHost.patch(`${process.env.NEXT_PUBLIC_BASE_URL}${url}`, body)
+            return data
+        } catch(e) {
+            return e
+        }
+    }
+
+    return { enterUser, createCategory, downloadFile, deleteData, postData, updateData }
 }
 export default useHttp;

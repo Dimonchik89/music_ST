@@ -36,7 +36,6 @@ const RegisterForm = ({title, buttonTitle, url}) => {
                         const { message } = data.response.data
                         setErrorText(message)
                         setErrorModal(true)
-                        console.log('message', message)
                         return 
                     }
 

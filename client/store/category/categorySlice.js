@@ -14,10 +14,13 @@ const categorySlice = createSlice({
         },
         selectActualCategoryId: (state, action) => {
             state.actualCategoryId = action.payload
+        },
+        removeCategory: (state, action) => {
+            state.allCategory = state.allCategory.filter(item => item.id !== action.payload)
         }
     }
 })
 
 const { actions, reducer } = categorySlice
-export const { addAllCategory, selectActualCategoryId } = actions
+export const { addAllCategory, selectActualCategoryId, removeCategory } = actions
 export default reducer

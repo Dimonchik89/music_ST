@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { IconButton, InputBase, Paper } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import search from "../../styles/search.module.scss";
 
 const Search = () => {
     const [value, setValue] = useState("")
+    const router = useRouter()
 
     const changeValue = (e) => {
         setValue(e.target.value);
@@ -14,6 +16,10 @@ const Search = () => {
     const handleSend = (e) => {
         e.preventDefault()
         setValue("")
+        router.push({
+            pathname: "/",
+            query: {keywords: value},
+        }, undefined, {scroll: false})
     }
 
     return (

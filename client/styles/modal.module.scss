@@ -294,10 +294,59 @@
 //     }
 // }
 
+
+.field__wrapper {
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .img {
+        margin: 0 auto;
+        width: 80%;
+        height: 20rem;
+        background-size: cover;
+        margin-bottom: 1.5rem;
+    }
+
+    .category__field {
+        font-size: 1.8rem;
+    }
+
+    .category__file {
+        display: none;
+    }
+
+    .file__info {
+        margin-left: 1rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+}
+
 .error__container {
     background-color: rgba($black, .4);
     backdrop-filter: blur(34px);
     border: 2px solid $gray;
     border-radius: 20px;
     color: $gray;
+}
+
+.form__update {
+    display: block;
+
+    .img__wrapper {
+        margin: 2rem 0;    
+
+        .img {
+            margin: 0 auto;
+            width: 80%;
+            height: 20rem;
+            background-size: cover;
+        }
+
+        .file {
+            display: none;
+        }
+    }
 }

@@ -8,14 +8,14 @@ import HeaderPlayer from './HeaderPlayer';
 import { showHeaderPlayer } from '../../store/player/playerSlice';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
-import { selectMusic, actualMusics } from '../../store/actualMusics';
+import { selectMusic } from '../../store/actualMusics';
 
 import text from "../../styles/text.module.scss";
 import header from "../../styles/header.module.scss";
 import helper from "../../styles/helper.module.scss";
 import search from "../../styles/search.module.scss";
 
-const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic, actualMusics}) => {
+const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic}) => {
     const router = useRouter()
     const id = router.query.sound
 
@@ -61,7 +61,6 @@ const HeaderContent = ({showPlayer, showHeaderPlayer, selectMusic, actualMusics}
 
 const mapStateToProps = createStructuredSelector({
     showPlayer,
-    actualMusics
 })
 
 const mapDispatchToProps = dispatch => ({

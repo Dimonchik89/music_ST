@@ -82,9 +82,16 @@
     height: 55.8rem;
     display: flex;
     align-items: center;
+    position: relative;
 
     @include _375 {
         height: 100%;
+    }
+
+    .close {
+        position: absolute;
+        top: 0;
+        right: 5rem;
     }
 
     .player__wrapper {

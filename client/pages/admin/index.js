@@ -53,15 +53,6 @@ const Admin = ({role, checkRole, addUser, music}) => {
                 <Box className={admin.container}>
                     <AdminMusic music={music}/>
                     {content}
-                    {/* <Button 
-                        variant="outlined"
-                        onClick={openCategoryModal}    
-                    >
-                        Create Category
-                    </Button>
-                    <Button variant="outlined">
-                        Create Song
-                    </Button> */}
                 </Box>
             </Container>
             <ModalCreateCategory 

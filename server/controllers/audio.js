@@ -26,6 +26,7 @@ const getAll = async (req, res) => {
     limit = limit || 9
     const offset = page * limit - limit
     let audio;
+
     if(categoryId && !keywords) {
         audio = await sequelize.models.Audio.findAndCountAll({where: { categoryId: {[Op.like]: `%${categoryId}%`}}, limit, offset})
     } if(!categoryId && keywords) {

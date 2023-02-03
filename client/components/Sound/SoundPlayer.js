@@ -62,9 +62,8 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
         )
         // allStop()
         selectMusic(music.id)
-        // showHeaderPlayer()
-        
       }
+      showHeaderPlayer()
       togglePlay(music.id)
   }
 
@@ -90,12 +89,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
       const options = formWaveSurferOptions(waveformRef.current);
 
       wavesurfer.current = WaveSurfer.create(options);
-
-      // const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}music/download?filename=${music.audio}`)
-      // const blob = await response.blob()
-      // const downloadUrl = window.URL.createObjectURL(blob)
       const musicUrl = await generateMusicLink(music.audio)
-
       wavesurfer.current.load(musicUrl);
 
       wavesurfer.current.on("audioprocess", function () {
@@ -151,7 +145,6 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
 
   //--------------------------
 
-
   const howLongPlay = () => {
     if(Math.floor(music?.progress) >= 60 && (music?.progress % 60) > 10) {
       return `${Math.floor(music?.progress / 60)}: ${Math.floor(music?.progress % 60)}`
@@ -163,7 +156,6 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
       return `0: 0${Math.floor(music?.progress)}`
     }
   }
-
 
   return (
     <>

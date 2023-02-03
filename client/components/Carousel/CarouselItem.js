@@ -38,7 +38,7 @@ const CarouselItem = ({slide, allStop, hideHeaderPlayer, selectActualCategoryId,
         <Box className={style} onClick={handleChangeQuery}>
             <picture>
                 <img
-                    src={`${process.env.NEXT_PUBLIC_IMG_URL}category/${slide.img}`}
+                    src={`${process.env.NEXT_PUBLIC_IMG_URL}${slide.img}`}
                     alt="category"
                 />
             </picture>

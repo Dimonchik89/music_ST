@@ -49,10 +49,10 @@ export async function getServerSideProps({req, res, query}) {
   let serverAudio;
 
   if(query.categoryId) {
-    const audioResponse = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams(query))
+    const audioResponse = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams({...query}))
     serverAudio = await audioResponse.json()
   } else {
-    const audioResponse = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams({categoryId: "1"}))
+    const audioResponse = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams({categoryId: "1", ...query}))
     serverAudio = await audioResponse.json()
   }  
 
