@@ -55,10 +55,13 @@ const musicsSlice = createSlice({
         },
         cahngeCurrentTimeDublicate: (state, action) => {
             state.currentTimeDublicate = action.payload
+        },
+        deleteMusic: (state, action) => {
+            state.actualMusics = state.actualMusics.filter(item => item.id !== action.payload)
         }
     }
 })
 
 const { actions, reducer } = musicsSlice;
-export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate } = actions;
+export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic } = actions;
 export default reducer;

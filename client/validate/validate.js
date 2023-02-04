@@ -24,3 +24,25 @@ export const categoryValidate = values => {
   }  
   return errors
 }
+
+export const musicValidate = values => {
+  const errors = {}
+  if(!values.name) {
+    errors.name = 'Required';
+  }
+  if(!values.description) {
+    errors.description = 'Required';
+  }
+  if(!values.categoryId) {
+    errors.categoryId = 'Required';
+  }
+  if(!values.keywords) {
+    errors.keywords = 'Required';
+  }
+  if(!values.audio) {
+    errors.audio = 'Required';
+  }
+  if(!values.img) {
+    errors.img = 'Required';
+  }
+}

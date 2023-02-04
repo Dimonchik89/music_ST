@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Box } from "@mui/system";
 import { Container } from "@mui/material";
 import Header from "../Header/Header";
@@ -10,38 +9,9 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import ModalSubscribe from "../Modal/ModalSubscribe";
 import { allCategory } from '../../store/category';
+import PagePagination from "../PagePagination/PagePagination";
 
 import main from "../../styles/main.module.scss";
-import { useEffect } from 'react';
-
-
-// const category = [
-//     {
-//         id: 1,
-//         title: "dark",
-//         image: "../../static/images/category/dark.svg"
-//     },
-//     {
-//         id: 2,
-//         title: "inspiration ",
-//         image: "../../static/images/category/inspiration.svg"
-//     },
-//     {
-//         id: 3,
-//         title: "happy",
-//         image: "../../static/images/category/happy.svg"
-//     },
-//     {
-//         id: 4,
-//         title: "action",
-//         image: "../../static/images/category/action1.jpg"
-//     },
-//     {
-//         id: 5,
-//         title: "dark",
-//         image: "../../static/images/category/dark.svg"
-//     },
-// ]
 
 const Main = ({showPlayer, allCategory}) => {
 
@@ -51,6 +21,7 @@ const Main = ({showPlayer, allCategory}) => {
             <Container maxWidth="xl">
                 {showPlayer ? null : <Carousel styleWrapper={main.main__carousel} category={allCategory}/>}
                 <Sound/>
+                <PagePagination/>
                 <ModalSubscribe/>
             </Container>
             <Footer/>

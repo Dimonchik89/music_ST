@@ -46,7 +46,7 @@ const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgV
         validate: categoryValidate,
         onSubmit: async (values) => {
             const formData = new FormData()
-            formData.append("name", values.name)
+            formData.append("name", values.name.trim())
             formData.append("img", values.img)
             const response = await serverFunc(formData)
             if(response.status === 200) {
