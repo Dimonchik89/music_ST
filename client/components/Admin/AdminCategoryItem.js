@@ -5,13 +5,13 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 import { connect } from "react-redux";
 import useHttp from "../../hooks/useHttp";
 import ErrorModal from "../Modal/ErrorModal";
-import ModalCategoryUpdate from "../Modal/ModalCategory/ModalCategoryUpdate";
 import AlertMessage from '../AlertMessage/AlertMessage';
+import ModalCategoryAdmin from "../Modal/ModalCategory/ModalCategoryAdmin";
 
 import admin from "../../styles/admin.module.scss";
 
 const AdminCategoryItem = ({category, removeCategory}) => {
-    const { deleteData } = useHttp(`category/${category.id}`)
+    const { deleteData, updateData } = useHttp(`category/${category.id}`)
     const [errorModal, setErrorModal] = useState(false)
     const [updateModal, setUpdateModal] = useState(false)
     const [showAlert, setShowAlert] = useState({show: false, status: null, text: ""})
@@ -81,9 +81,26 @@ const AdminCategoryItem = ({category, removeCategory}) => {
                     Delete
                 </Button>
             </Box>
-            <ErrorModal open={errorModal} handleClose={handleCloseErrorModal} text="category not deleted, try later"/>
-            <ModalCategoryUpdate open={updateModal} handleClose={handleCloseUpdateModal} category={category} handleOpenAlert={handleOpenAlert}/>
-            <AlertMessage handleClose={handleCloseAlert} open={showAlert.show} status={showAlert.status} text={showAlert.text}/>
+            <ErrorModal 
+                open={errorModal} 
+                handleClose={handleCloseErrorModal} 
+                text="category not deleted, try later"
+            />
+            <ModalCategoryAdmin 
+                open={updateModal} 
+                handleClose={handleCloseUpdateModal} 
+                category={category} 
+                handleOpenAlert={handleOpenAlert}
+                nameValue={category.name}
+                imgValue={category.img}
+                serverFunc={updateData}
+                buttonTitle="update"
+            />
+            <AlertMessage 
+                handleClose={handleCloseAlert} 
+                open={showAlert.show} 
+                status={showAlert.status} 
+                text={showAlert.text}/>
         </>
 
     )

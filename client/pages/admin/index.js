@@ -84,7 +84,6 @@ export async function getServerSideProps({req, res}) {
 
   const responseMusic = await fetch(`${process.env.BASE_URL}/music`)
   const music = await responseMusic.json()
-  console.log("music", music);
 
   return {
     props: {

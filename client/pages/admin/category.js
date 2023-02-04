@@ -2,14 +2,15 @@ import { useState } from "react"
 import AdminHeader from "../../components/Admin/AdminHeader"
 import AdminCategoryItem from "../../components/Admin/AdminCategoryItem"
 import { useEffect } from "react"
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, Button, Container } from "@mui/material"
 import { addAllCategory, allCategory } from "../../store/category"
 import { bindActionCreators } from "@reduxjs/toolkit"
 import { createStructuredSelector } from 'reselect';
 import { connect } from "react-redux"
 import { useRouter } from "next/router"
-import ModalCategoryCreate from "../../components/Modal/ModalCategory/ModalCategoryCreate"
 import AlertMessage from "../../components/AlertMessage/AlertMessage"
+import ModalCategoryAdmin from "../../components/Modal/ModalCategory/ModalCategoryAdmin"
+import useHttp from "../../hooks/useHttp"
 
 import admin from "../../styles/admin.module.scss"
 import helper from "../../styles/helper.module.scss"
@@ -18,6 +19,7 @@ const Category = ({categories, errorCode, addAllCategory, allCategory}) => {
     const [showModal, setShowModal] = useState(false)
     const [showAlert, setShowAlert] = useState({show: false, status: null, text: ""})
     const router = useRouter()
+    const { postData } = useHttp('category')
 
     useEffect(() => {
         addAllCategory(categories)
@@ -73,8 +75,21 @@ const Category = ({categories, errorCode, addAllCategory, allCategory}) => {
                     {content}
                 </Box>
             </Container>
-            <ModalCategoryCreate open={showModal} handleClose={handleClose} handleOpenAlert={handleOpenAlert}/>
-            <AlertMessage handleClose={handleCloseAlert} open={showAlert.show} status={showAlert.status} text={showAlert.text}/>
+            <ModalCategoryAdmin
+                open={showModal} 
+                handleClose={handleClose} 
+                handleOpenAlert={handleOpenAlert}
+                nameValue=""
+                imgValue=""
+                serverFunc={postData}
+                buttonTitle="create"
+            />
+            <AlertMessage 
+                handleClose={handleCloseAlert} 
+                open={showAlert.show} 
+                status={showAlert.status} 
+                text={showAlert.text}
+            />
         </>
     )
 }

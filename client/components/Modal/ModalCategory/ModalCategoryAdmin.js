@@ -2,13 +2,11 @@ import { useRef } from "react";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { categoryValidate } from '../../../validate/validate';
-import useHttp from "../../../hooks/useHttp";
 import { useRouter } from "next/router";
 
 import error from "../../../styles/error.module.scss";
 import modal from "../../../styles/modal.module.scss";
 import helper from "../../../styles/helper.module.scss";
-
 
 const style = {
   position: 'absolute',
@@ -22,13 +20,11 @@ const style = {
   p: 4,
 };
 
-const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
+const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, serverFunc, buttonTitle}) => {
     const file = useRef(null)
-    const { postData } = useHttp('category')
     const router = useRouter()
 
     const changePreview = (e) => {
-        console.log(e.target.files)
         const selectImg = e.target.files[0]
         if (selectImg) {
             let fr = new FileReader();
@@ -43,8 +39,8 @@ const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            img: null,
+            name: nameValue,
+            img: imgValue,
 
         },
         validate: categoryValidate,
@@ -52,8 +48,7 @@ const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
             const formData = new FormData()
             formData.append("name", values.name)
             formData.append("img", values.img)
-            const response = await postData(formData)
-            console.log(response);
+            const response = await serverFunc(formData)
             if(response.status === 200) {
                 handleClose()
                 handleOpenAlert({status: response.status, text: response.statusText})
@@ -81,6 +76,7 @@ const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
                 <Box>
                     <form
                         onSubmit={formik.handleSubmit}
+                        className={modal.form__update}
                     >
                         <Box className={modal.field__wrapper}>
                             <TextField
@@ -98,14 +94,14 @@ const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
                             {formik.errors.name ? <div className={error.error}>{formik.errors.name}</div> : null}
                         </Box>
 
-                        <Box className={modal.field__wrapper}>
+                        <Box className={modal.img__wrapper}>
                             <Box 
                                 id="label__create"
                                 className={modal.img}
+                                style={{backgroundImage: `url(${process.env.NEXT_PUBLIC_IMG_URL}${formik.values.img})`}}
                             ></Box>
-                            
                             <input 
-                                className={modal.category__file}
+                                className={modal.file}
                                 ref={file}
                                 type="file"
                                 name="img"
@@ -130,7 +126,7 @@ const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
                                 type="submit"
                                 color="success"
                             >
-                                Create
+                                {buttonTitle}
                             </Button>
                         </Box>
                     </form>
@@ -139,4 +135,4 @@ const ModalCategoryCreate = ({open, handleClose, handleOpenAlert}) => {
         </Modal>
     )
 }
-export default ModalCategoryCreate
+export default ModalCategoryAdmin;
