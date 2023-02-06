@@ -21,6 +21,7 @@ const formWaveSurferOptions = (ref) => ({
   cursorColor: "OrangeRed",
   barWidth: window.screen.width <= 375 ? 1 : 3,
   barRadius: 3,
+  barRadius: 3,
   responsive: true,
   height: 104,
   normalize: true,

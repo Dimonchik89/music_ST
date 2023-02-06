@@ -34,7 +34,6 @@ const formWaveSurferOptions = (ref) => ({
         redirect: "follow"
       },
   // backend: "MediaElement",
-  normalize: true,
   preload: true,
   hideScrollbar: true
 });
