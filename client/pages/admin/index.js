@@ -17,6 +17,7 @@ import useHttp from "../../hooks/useHttp";
 import AlertMessage from '../../components/AlertMessage/AlertMessage';
 
 import admin from "../../styles/admin.module.scss";
+import PagePagination from "../../components/PagePagination/PagePagination";
 
 const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, categories, addAllCategory}) => {
     const [showModalMusic, setShowModalMusic] = useState(false)
@@ -86,6 +87,7 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
                 </Box>
             </Box>
         </Container>
+        <PagePagination pathname={"/admin"}/>
         <ModalMusicAdmin 
             open={showModalMusic}
             handleClose={handleCloseModalMusic}    
@@ -123,7 +125,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)
 
-export async function getServerSideProps({req, res}) {
+export async function getServerSideProps({req, res, query}) {
     const responseChekRole = await fetch(`${process.env.BASE_URL}/user/auth`, {
         headers: {
         'authorization': `${unescape(encodeURIComponent(`Bearer ${getCookie('token', { req, res })}`))}`
@@ -131,7 +133,7 @@ export async function getServerSideProps({req, res}) {
     })
   const checkRole = await responseChekRole.json()
 
-  const responseMusic = await fetch(`${process.env.BASE_URL}/music`)
+  const responseMusic = await fetch(`${process.env.BASE_URL}/music?` + new URLSearchParams({...query}))
   const music = await responseMusic.json()
 
   const resposne = await fetch(`${process.env.BASE_URL}category`)

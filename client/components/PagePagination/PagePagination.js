@@ -1,19 +1,25 @@
-import { useState } from 'react';
-import { Pagination } from "@mui/material"
+import { useState, useEffect } from 'react';
+import { Pagination, PaginationItem } from "@mui/material"
 import { allCount } from "../../store/actualMusics"
 import { connect } from "react-redux";
 import { createStructuredSelector } from 'reselect';
 import { useRouter } from "next/router";
 
-const PagePagination = ({allCount}) => {
-    const [page, setPage] = useState(1)
+import pagination from "../../styles/pagination.module.scss";
+
+const PagePagination = ({allCount, pathname}) => {
     const router = useRouter()
-    const allPage = Math.floor(+allCount / 1)
+    const [page, setPage] = useState(+router.query.page || 1)
+    const allPage = Math.ceil(+allCount / process.env.NEXT_PUBLIC_SOUND_LIMIT) || 1
+
+    useEffect(() => {
+        console.log(router.query.page)
+    }, [])
     
     const handleChangePage = (e, value) => {
         setPage(value)
         router.push({
-            pathname: "/",
+            pathname: pathname,
             query: {...router.query, page: value}
         }, undefined, { scroll: false})
     }
@@ -23,9 +29,16 @@ const PagePagination = ({allCount}) => {
             count={allPage}
             variant='outlined'
             color='white'
-            className='pagination'
             page={page}
             onChange={handleChangePage}
+            shape="rounded"
+            className={pagination.container}
+            renderItem={(item) => (
+                <PaginationItem
+                    // className={pagination.item}
+                    {...item}
+                />
+            )}
          />
     )
 }

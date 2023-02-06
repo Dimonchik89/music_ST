@@ -1,3 +1,4 @@
+@import "./vars";
 @import "./mixin//mixin.scss";
 
 @font-face {
@@ -64,6 +65,17 @@ a {
   }
 }
 
+
+.MuiPaginationItem-root {
+  color: $white;
+  font-size: 1.4rem;
+  border: 1px solid $white;
+
+  &.Mui-selected {
+    color: $yellow;
+    border: 1px solid $yellow;
+  }
+}
 // .swiper-wrapper {
 
 //   @include _375 {

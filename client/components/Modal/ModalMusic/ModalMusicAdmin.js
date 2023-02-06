@@ -113,7 +113,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                 inputProps={{style: {fontSize: 20}}}
                                 InputLabelProps={{style: {fontSize: 14}}}
                             />
-                            {formik.errors.name ? <div className={error.error}>{formik.errors.name}</div> : null}
+                            {(formik.errors.name && formik.touched.name) ? <div className={error.error}>{formik.errors.name}</div> : null}
                         </Box>
 
                         <Box className={modal.field__wrapper}>
@@ -130,9 +130,8 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                 InputLabelProps={{style: {fontSize: 14}}}
                                 rows={6}
                                 multiline
-                                maxRows={8}
                             />
-                            {formik.errors.description ? <div className={error.error}>{formik.errors.description}</div> : null}
+                            {(formik.errors.description && formik.touched.description) ? <div className={error.error}>{formik.errors.description}</div> : null}
                         </Box>
 
                         <Box className={modal.field__wrapper}>
@@ -148,7 +147,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                 inputProps={{style: {fontSize: 20}}}
                                 InputLabelProps={{style: {fontSize: 14}}}
                             />
-                            {formik.errors.keywords ? <div className={error.error}>{formik.errors.keywords}</div> : null}
+                            {(formik.errors.keywords && formik.touched.keywords) ? <div className={error.error}>{formik.errors.keywords}</div> : null}
                         </Box>
 
                         <Box>
@@ -181,7 +180,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                     formik.setFieldValue('audio', e.currentTarget.files[0])
                                 }}
                             />
-                            {formik.errors.img ? <div className={error.error}>{formik.errors.img}</div> : null}
+                            {(formik.errors.audio && formik.touched.audio) ? <div className={error.error}>{formik.errors.audio}</div> : null}
                         </Box>
 
                         <Box className={modal.img__wrapper}>
@@ -201,7 +200,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                     formik.setFieldValue('img', e.currentTarget.files[0])
                                 }}
                             />
-                            {formik.errors.img ? <div className={error.error}>{formik.errors.img}</div> : null}
+                            {(formik.errors.img && formik.touched.img) ? <div className={error.error}>{formik.errors.img}</div> : null}
                         </Box>
 
                         <Box className={`${helper.d__flex} ${helper.space__between}`}>

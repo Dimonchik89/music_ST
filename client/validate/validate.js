@@ -45,4 +45,5 @@ export const musicValidate = values => {
   if(!values.img) {
     errors.img = 'Required';
   }
+  return errors
 }

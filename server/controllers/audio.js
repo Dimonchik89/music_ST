@@ -5,18 +5,23 @@ const path = require("path")
 const fs = require("fs")
 
 const create = async (req, res) => {
-    const {name, categoryId, keywords, description} = req.body
-    const {audio, img} = req.files
-    const audioExtension = audio.name.split(".").pop()
-    const imgExtension = img.name.split(".").pop()
+    try {
+        const {name, categoryId, keywords, description} = req.body
+        const {audio, img} = req.files
+        const audioExtension = audio.name.split(".").pop()
+        const imgExtension = img.name.split(".").pop()
 
-    const audioName = uuid.v4() + `.${audioExtension}`
-    const imgName = uuid.v4() + `.${imgExtension}`
+        const audioName = uuid.v4() + `.${audioExtension}`
+        const imgName = uuid.v4() + `.${imgExtension}`
 
-    audio.mv(path.resolve(__dirname, "..", "static/music/audio", audioName))
-    img.mv(path.resolve(__dirname, "..", "static/music/logo", imgName))
-    const music = await sequelize.models.Audio.create({name, categoryId, keywords, description, audio: `music/audio/${audioName}`, img: `music/logo/${imgName}`})
-    return res.json(music)
+        audio.mv(path.resolve(__dirname, "..", "static/music/audio", audioName))
+        img.mv(path.resolve(__dirname, "..", "static/music/logo", imgName))
+        const music = await sequelize.models.Audio.create({name, categoryId, keywords, description, audio: `music/audio/${audioName}`, img: `music/logo/${imgName}`})
+        return res.json(music)
+    } catch(e) {
+        return res.status(404).json({message: "Fields must be filled"})
+    }
+
 }
 
 const getAll = async (req, res) => {
@@ -128,10 +133,8 @@ const update = async (req, res) => {
 const download = async (req, res) => {
     try {
         const {filename} = req.query
-        console.log("filename", filename);
         const pathToSharedDirectory = path.resolve(__dirname, "..", "static")
         const filePath = pathToSharedDirectory + '/' + filename
-        console.log('filePath', filePath);
         if(fs.existsSync(filePath))
         return res.download(filePath, (err) => {
             console.log('err', err)

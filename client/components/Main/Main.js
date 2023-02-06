@@ -21,7 +21,7 @@ const Main = ({showPlayer, allCategory}) => {
             <Container maxWidth="xl">
                 {showPlayer ? null : <Carousel styleWrapper={main.main__carousel} category={allCategory}/>}
                 <Sound/>
-                <PagePagination/>
+                <PagePagination pathname="/"/>
                 <ModalSubscribe/>
             </Container>
             <Footer/>
