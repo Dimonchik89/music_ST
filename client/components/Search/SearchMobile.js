@@ -1,21 +1,25 @@
 import { Box, TextField } from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import search from "../../styles/search.module.scss";
 
 const SearchMobile = ({show, toggleMobileSearch}) => {
-    const [findText, setFindText] = useState("")
+    const [value, setValue] = useState("")
+    const router = useRouter()
 
-    const onSubmit = (e) => {
+    const handleSend = (e) => {
         e.preventDefault()
-
-        
-        setFindText('')
+        setValue('')
+        router.push({
+            pathname: "/",
+            query: {keywords: value},
+        }, undefined, {scroll: false})
         toggleMobileSearch()
     }
 
     const handleChangeFindText = (e) => {
-        setFindText(e.target.value)
+        setValue(e.target.value)
     }
 
     const showSearch = show ? null : {display: "none !important"}
@@ -23,9 +27,9 @@ const SearchMobile = ({show, toggleMobileSearch}) => {
     return (
         <Box className={search.mobile__container} sx={showSearch}>
             <Box className={search.mobile__wrapper}>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSend}>
                     <input 
-                        value={findText}
+                        value={value}
                         onChange={handleChangeFindText}
                         placeholder="Search free music"
                         type="text" 
