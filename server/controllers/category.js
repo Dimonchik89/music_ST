@@ -4,7 +4,12 @@ const path = require("path")
 const fs = require("fs")
 
 const getAllCategory = async (req, res) => {
-    const category = await sequelize.models.category.findAll()
+    let category;
+    try {
+        category = await sequelize.models.category.findAll()
+    } catch(e) {
+        console.error(`\n [Category controller] Error \n`, e)
+    }
     return res.status(200).json(category)
 }
 
@@ -13,8 +18,25 @@ const createCategory = async (req, res) => {
     const { img } = req.files
     const fileExtension = img.name.split(".").pop()
     let fileName = uuid.v4() + `.${fileExtension}`
-    img.mv(path.resolve(__dirname, "..", "static/category", fileName))
-    const category = await sequelize.models.category.create({name, img: `category/${fileName}`})
+    if(!img) {
+        return res.status(404).json({message: "image is not defined"})
+    }
+    if(!name) {
+        return res.status(404).json({message: "name is not defined"}) 
+    }
+    let category;
+    try {
+        const dirPath = path.resolve(__dirname, "..", "static/category")
+        if(!fs.existsSync(dirPath)) {
+            fs.mkdir(dirPath, err => {
+                return res.status(404).json({message: "Folder not created"})
+            })
+        }
+        img.mv(path.resolve(__dirname, "..", "static/category", fileName))
+        category = await sequelize.models.category.create({name, img: `category/${fileName}`})
+    } catch(e) {
+        console.error(`\n [Category controller] Error \n`, e)
+    }
     return res.status(200).json(category)
 }
 
