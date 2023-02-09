@@ -22,12 +22,17 @@
             }
 
             .text__container {
-                width: 30rem;
+                padding: 0 .5rem;
+                width: 20rem;
             }
 
             .description__container {
                 width: 50rem;
                 margin-right: 1.5rem;
+                padding: 0 .5rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis
             }
         }
     }

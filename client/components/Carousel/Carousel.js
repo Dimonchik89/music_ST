@@ -28,7 +28,7 @@ const Carousel = ({styleWrapper, category}) => {
             <Box className={carousel.carousel__wrapper}>
                 <Swiper
                     slidesPerView={2}
-                    spaceBetween={20}
+                    spaceBetween={10}
                     // pagination={{
                     //     clickable: true,
                     // }}

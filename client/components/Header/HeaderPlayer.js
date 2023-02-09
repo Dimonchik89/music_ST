@@ -23,10 +23,6 @@ const HeaderPlayer = ({music, hideHeaderPlayer}) => {
         setActiveButton(prev => !prev)
     }
 
-    useEffect(() => {
-        console.log('router', router);
-    }, [router])
-
     const closeHeaderPlayer = () => {
         let newQuery = {};
         for(let key in router.query) {

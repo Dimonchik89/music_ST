@@ -9,6 +9,7 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 import ModalMusicAdmin from "../Modal/ModalMusic/ModalMusicAdmin";
 import AlertMessage from "../AlertMessage/AlertMessage";
 
+import helper from "../../styles/helper.module.scss";
 import admin from "../../styles/admin.module.scss";
 
 const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
@@ -66,13 +67,27 @@ const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
                 </picture>
                 <Box className={admin.text__container}>
                     <Typography
-                        variant="h5"
-                        component="p"
+                        variant="h4"
+                        component="h4"
                     >
-                        Name: {music.name}
+                        Name:
+                    </Typography>
+                    <Typography
+                        variant="h5"
+                        component="span"
+                        className={helper.text__capitalize}
+                    >
+                        {music.name}
                     </Typography>
                 </Box>
                 <Box className={admin.description__container}>
+                    <Typography
+                        variant="h4"
+                        component="h4"
+                        className={helper.text__capitalize}
+                    >
+                        Description:
+                    </Typography>
                     <Typography
                         variant="h5"
                         component="p"
@@ -82,18 +97,34 @@ const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
                 </Box>
                 <Box className={admin.text__container}>
                     <Typography
+                        variant="h4"
+                        component="h4"
+                        className={helper.text__capitalize}
+                    >
+                        keywords:
+                    </Typography>
+                    <Typography
                         variant="h5"
                         component="p"
+                        className={helper.text__capitalize}
                     >
-                        keywords: {music.keywords}
+                        {music.keywords}
                     </Typography>
                 </Box>
                 <Box className={admin.text__container}>
                     <Typography
+                        variant="h4"
+                        component="h4"
+                        className={helper.text__capitalize}
+                    >
+                        category:
+                    </Typography>
+                    <Typography
                         variant="h5"
                         component="p"
+                        className={helper.text__capitalize}
                     >
-                        category: {categoryContent}
+                        {categoryContent}
                     </Typography>
                 </Box>
 
@@ -101,7 +132,7 @@ const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
                     controls
                     src={`${process.env.NEXT_PUBLIC_IMG_URL}${music.audio}`}
                 />
-                <Box>
+                <Box style={{padding: "0 .5rem"}}>
                     <Button
                         variant="outlined"
                         onClick={handleOpenModalMusic}
@@ -129,6 +160,7 @@ const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
                 audioValue={music.audio}
                 serverFunc={updateData}
                 buttonTitle="update"
+                modalTitle="Update track"
             />
             <AlertMessage 
                 handleClose={handleCloseAlert} 

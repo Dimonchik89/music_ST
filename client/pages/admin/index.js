@@ -25,6 +25,7 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
     const {postData} = useHttp('music')
     const router = useRouter()
 
+
     useEffect(() => {
         selectMusics(music);
     }, [music])
@@ -69,6 +70,12 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
 
     const content = actualMusics?.map(item => <AdminMusicItem key={item.id} music={item}/>)
 
+
+    if(checkRole.message) {
+        router.push('/')
+        return null
+    }
+
     return (
         <>
         <AdminHeader/>
@@ -79,7 +86,7 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
                         variant="outlined"
                         onClick={handleOpenModalMusic}
                     >
-                        Create
+                        Add music
                     </Button>
                 </Box>
                 <Box className={admin.music__wrapper}>
@@ -87,7 +94,9 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
                 </Box>
             </Box>
         </Container>
-        <PagePagination pathname={"/admin"}/>
+        <Box style={{background: "black", padding: "10px 0"}}>
+            <PagePagination pathname={"/admin"}/>
+        </Box>
         <ModalMusicAdmin 
             open={showModalMusic}
             handleClose={handleCloseModalMusic}    
@@ -100,6 +109,7 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
             audioValue={null}
             serverFunc={postData}
             buttonTitle="create"
+            modalTitle="Add track"
         />
         <AlertMessage 
             handleClose={handleCloseAlert} 
@@ -126,6 +136,8 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)
 
 export async function getServerSideProps({req, res, query}) {
+    console.log("req", req.cookies);
+    // console.log("res", res);
     const responseChekRole = await fetch(`${process.env.BASE_URL}/user/auth`, {
         headers: {
         'authorization': `${unescape(encodeURIComponent(`Bearer ${getCookie('token', { req, res })}`))}`

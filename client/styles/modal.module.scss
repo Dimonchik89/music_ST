@@ -4,6 +4,8 @@
 .container {
     width: 108rem;
     height: 94rem;
+    // height: 80%;
+    // overflow-y: scroll;
     border: 2px solid $gray;
     border-radius: 2rem;
     background-color: rgba($black, .5);
@@ -238,6 +240,7 @@
                 .submit__wrapper {
                     display: flex;
                     align-items: center;
+                    cursor: pointer;
 
                     @include _375 {
                         display: none;
@@ -295,34 +298,30 @@
 // }
 
 
-// .field__wrapper {
-//     margin: 1.5rem 0;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: space-between;
+.field__wrapper {
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-//     .img {
-//         margin: 0 auto;
-//         width: 80%;
-//         height: 20rem;
-//         background-size: cover;
-//         margin-bottom: 1.5rem;
-//     }
+    .img {
+        margin: 0 auto;
+        width: 80%;
+        height: 20rem;
+        background-size: cover;
+        margin-bottom: 1.5rem;
+    }
 
-//     .category__field {
-//         font-size: 1.8rem;
-//     }
+    .category__field {
+        font-size: 1.8rem;
+    }
 
-//     .category__file {
-//         display: none;
-//     }
-
-//     .file__info {
-//         margin-left: 1rem;
-//         font-size: 1.4rem;
-//         font-weight: 500;
-//     }
-// }
+    .file__info {
+        margin-left: 1rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+}
 
 .error__container {
     background-color: rgba($black, .4);

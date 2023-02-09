@@ -6,6 +6,7 @@ import SlideMenu from "../SlideMenu/SlideMenu";
 import SearchMobile from "../Search/SearchMobile";
 import HeaderMobile from "./HeaderModile";
 import { mobileMenu, mobileSearch, toggleMobileMenu, toggleMobileSearch } from '../../store/header';
+import { useRouter } from "next/router";
 
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { createStructuredSelector } from "reselect";
@@ -16,26 +17,17 @@ import button from "../../styles/button.module.scss";
 import header from "../../styles/header.module.scss";
 
 const HeaderHead = ({showPlayer, mobileMenu, mobileSearch, toggleMobileMenu, toggleMobileSearch}) => {
-    // const [showMenu, setShowMenu] = useState(false)
-    // const [showSearch, setShowSearch] = useState(false)
-
     const headerStyle = showPlayer ? header.header__song__on : header.header__song__off
+    const router = useRouter()
 
     const search = showPlayer ? <Search/> : null
-
-    // const handleChangeShowMenu = () => {
-    //     setShowMenu(showMenu => !showMenu)
-    // }
-
-    // const handleChangeShowSearch = () => {
-    //     setShowSearch(showSearch => !showSearch)
-    // }
 
     return (
         <Box className={header.header__inner}>
             <Box className={`${header.header__item} ${headerStyle}`}>
                 <picture>
                     <img
+                        onClick={() => router.push("/")}
                         className={logo.logo}
                         alt="logo"
                     />

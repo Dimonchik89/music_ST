@@ -18,6 +18,7 @@ const createCategory = async (req, res) => {
     const { img } = req.files
     const fileExtension = img.name.split(".").pop()
     let fileName = uuid.v4() + `.${fileExtension}`
+
     if(!img) {
         return res.status(404).json({message: "image is not defined"})
     }
@@ -28,9 +29,7 @@ const createCategory = async (req, res) => {
     try {
         const dirPath = path.resolve(__dirname, "..", "static/category")
         if(!fs.existsSync(dirPath)) {
-            fs.mkdir(dirPath, err => {
-                return res.status(404).json({message: "Folder not created"})
-            })
+            fs.mkdirSync(dirPath, {recursive: true})
         }
         img.mv(path.resolve(__dirname, "..", "static/category", fileName))
         category = await sequelize.models.category.create({name, img: `category/${fileName}`})

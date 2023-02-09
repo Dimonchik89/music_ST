@@ -13,7 +13,6 @@ import { generateMusicLink } from "../../api/playApi";
 import helper from "../../styles/helper.module.scss";
 import button from "../../styles/button.module.scss";
 import sound from "../../styles/sound.module.scss";
-import Link from "next/link";
 
 const formWaveSurferOptions = (ref) => ({
   container: ref,
@@ -33,7 +32,6 @@ const formWaveSurferOptions = (ref) => ({
         dest: "audio",
         redirect: "follow"
       },
-  // backend: "MediaElement",
   preload: true,
   hideScrollbar: true
 });
@@ -59,7 +57,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
           undefined, 
           {scroll: false, shallow: true}
         )
-        // allStop()
+        allStop()
         selectMusic(music.id)
       }
       showHeaderPlayer()
@@ -87,7 +85,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
 
       const options = formWaveSurferOptions(waveformRef.current);
 
-      wavesurfer.current = WaveSurfer.create(options);
+      wavesurfer.current = WaveSurfer?.create(options);
       const musicUrl = await generateMusicLink(music.audio)
       wavesurfer.current.load(musicUrl);
 
@@ -104,8 +102,12 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
         waveformRef?.current?.children[0]?.remove()
       }
     };
+
+    setTimeout(() => {
+      create();
+    }, 500)
     
-    create();
+    // create();
     
     return () => {
       if (wavesurfer.current) {

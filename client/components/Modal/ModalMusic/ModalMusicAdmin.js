@@ -21,10 +21,12 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
+  height: "75%",
+  overflowY: "scroll",
   p: 4,
 };
 
-const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, descriptionValue, categoryIdValue, keywordsValue, audioValue, serverFunc, buttonTitle, allCategory}) => {
+const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, descriptionValue, categoryIdValue, keywordsValue, audioValue, serverFunc, buttonTitle, allCategory, modalTitle}) => {
     const imgRef = useRef(null)
     const audioRef = useRef(null)
     const router = useRouter()
@@ -92,8 +94,8 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
             onClose={handleClose}
         >
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h4" component="h2" textAlign="center">
-                    Create category
+                <Typography variant="h4" component="h2" textAlign="center">
+                    {modalTitle}
                 </Typography>
                 <Box>
                     <form
@@ -103,7 +105,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                         <Box className={modal.field__wrapper}>
                             <TextField
                                 className={modal.category__field}
-                                label="Name Category"
+                                label="Track name"
                                 variant="standard" 
                                 name="name"
                                 type="text"
@@ -126,7 +128,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
                                 fullWidth
-                                inputProps={{style: {fontSize: 16}}}
+                                inputProps={{style: {fontSize: 16}, maxLength: 100}}
                                 InputLabelProps={{style: {fontSize: 14}}}
                                 rows={6}
                                 multiline
@@ -144,13 +146,19 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                 value={formik.values.keywords}
                                 onChange={formik.handleChange}
                                 fullWidth
-                                inputProps={{style: {fontSize: 20}}}
+                                inputProps={{style: {fontSize: 20}, maxLength: 100}}
                                 InputLabelProps={{style: {fontSize: 14}}}
                             />
                             {(formik.errors.keywords && formik.touched.keywords) ? <div className={error.error}>{formik.errors.keywords}</div> : null}
                         </Box>
 
-                        <Box>
+                        <Box style={{marginTop: "2.5rem"}}>
+                            <Typography
+                                variant="h4"
+                                component="h6"
+                            >
+                                Select Category
+                            </Typography>
                             <FormGroup>
                                 {allCategory?.map(category => <Field
                                                                 type="checkbox"

@@ -10,10 +10,10 @@
         height: 2px;
         background: $white;
         position: absolute;
-        // top: calc(100% - 3.2rem);
-        bottom: -2px;
+        bottom: 32px;
         left: 50%;
         transform: translateX(-50%);
+        z-index: 1;
 
         @include _375 {
             width: 95%;

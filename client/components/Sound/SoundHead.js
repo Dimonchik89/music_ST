@@ -5,16 +5,24 @@ import { handleOpenModal } from "../../store/modal";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { connect } from "react-redux";
 import { downloadMusic } from "../../api/downloadApi";
+import { setSongIsDownloading } from "../../store/actualMusics";
+
 
 import helper from "../../styles/helper.module.scss";
 import sound from "../../styles/sound.module.scss";
 
 
-const SoundHead = ({music, handleOpenModal}) => {
+const SoundHead = ({music, handleOpenModal, setSongIsDownloading}) => {
     const [ activeButton, setActiveButton ] = useState(false)
 
     const changeButton = () => {
         setActiveButton(prev => !prev)
+    }
+
+    const handleDownload = (e) => {
+        setSongIsDownloading(music)
+        handleOpenModal()
+        downloadMusic({e, music})
     }
 
     const showButton = activeButton ? 
@@ -44,10 +52,7 @@ const SoundHead = ({music, handleOpenModal}) => {
                     className={`${sound.button__text}`} 
                     download
                     target="_blank"
-                    onClick={(e) => {
-                        handleOpenModal()
-                        downloadMusic({e, music})
-                    }}  
+                    onClick={handleDownload}  
                 >
                     <p className={sound.text__inner}>
                         Download
@@ -59,7 +64,8 @@ const SoundHead = ({music, handleOpenModal}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    handleOpenModal: bindActionCreators(handleOpenModal, dispatch)
+    handleOpenModal: bindActionCreators(handleOpenModal, dispatch),
+    setSongIsDownloading: bindActionCreators(setSongIsDownloading, dispatch)
 
 })
 

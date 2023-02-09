@@ -6,7 +6,8 @@ const initialState = {
     loading: false,
     music: null,
     currentTimeDublicate: 0,
-    allCount: 0
+    allCount: 0,
+    songIsDownloading: null
 }
 
 // переделать на получение всей музыки с бека и фильтрации е селекторк
@@ -58,10 +59,13 @@ const musicsSlice = createSlice({
         },
         deleteMusic: (state, action) => {
             state.actualMusics = state.actualMusics.filter(item => item.id !== action.payload)
+        },
+        setSongIsDownloading: (state, action) => {
+            state.songIsDownloading = action.payload
         }
     }
 })
 
 const { actions, reducer } = musicsSlice;
-export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic } = actions;
+export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic, setSongIsDownloading } = actions;
 export default reducer;

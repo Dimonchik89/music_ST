@@ -22,7 +22,7 @@ const Home = ({category, checkRole, serverAudio, addAllCategory, selectActualCat
   }, [checkRole])
 
   useEffect(() => {
-    selectActualCategoryId(+router.query.categoryId || category[0]?.id)
+    selectActualCategoryId(+router.query.categoryId || 0)
   }, [router])
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Home = ({category, checkRole, serverAudio, addAllCategory, selectActualCat
   return (
     <>
       <Main/>
-      {/* <Link href="/admin">Admin</Link> */}
+      <Link href="/admin">Admin</Link>
       {/* <Link href="/register">Register</Link> */}
     </>
   )

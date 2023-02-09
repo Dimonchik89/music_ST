@@ -24,6 +24,8 @@ const ModalSubscribe = ({showModal, handleCloseModal}) => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         boxShadow: 24,
+        height: "75%",
+        overflowY: "scroll",
         pt: 2,
         px: 4,
         pb: 3,
@@ -36,7 +38,6 @@ const ModalSubscribe = ({showModal, handleCloseModal}) => {
             onClose={handleCloseModal}
         >
             <Box 
-                // sx={{ ...style, width: 200 }}
                 className={modal.container}    
             >
                 <IconButton
@@ -53,7 +54,7 @@ const ModalSubscribe = ({showModal, handleCloseModal}) => {
                     <ModalYoutubeComment/>
                 </ModalBlock>
                 <ModalBlock title="Paste the link to your video we will take care of it">
-                    <ModalYoutubeLink/>
+                    <ModalYoutubeLink onClose={handleCloseModal}/>
                 </ModalBlock>
             </Box>
         </Modal>
