@@ -11,7 +11,7 @@ const PagePagination = ({allCount, pathname}) => {
     const router = useRouter()
     const [page, setPage] = useState(+router.query.page || 1)
     const allPage = Math.ceil(+allCount / process.env.NEXT_PUBLIC_SOUND_LIMIT) || 1
-    
+
     const handleChangePage = (e, value) => {
         setPage(value)
         router.push({
@@ -19,6 +19,10 @@ const PagePagination = ({allCount, pathname}) => {
             query: {...router.query, page: value}
         }, undefined, { scroll: false})
     }
+
+    useEffect(() => {
+        setPage(+router.query.page || 1)
+    }, [router.query.page])
 
     return (
         <Pagination

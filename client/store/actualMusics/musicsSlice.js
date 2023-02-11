@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import useHttp from '../../hooks/useHttp';
 
 const initialState = {
     actualMusics: [],
@@ -10,7 +11,13 @@ const initialState = {
     songIsDownloading: null
 }
 
-// переделать на получение всей музыки с бека и фильтрации е селекторк
+export const fetchMusic = createAsyncThunk(
+    "music/fetchMusic",
+    (url) => {
+        const {getData} = useHttp(url)
+        return getData()
+    }
+)
 
 const musicsSlice = createSlice({
     name: 'actualMusics',
@@ -27,7 +34,16 @@ const musicsSlice = createSlice({
                 }
                 return item
             })
-            state.music = {...state.music, play: !state.music.play}
+            state.music = {...state.music, play: !state.music?.play}
+        },
+        stopMusic: (state, action) => {
+            state.actualMusics = state.actualMusics.map(item => {
+                if(item.id === action.payload) {
+                    return {...item, play: false}
+                }
+                return item
+            })
+            state.music = {...state.music, play: false}
         },
         selectMusic: (state, action) => {
             state.music = state.actualMusics?.find((item) => {
@@ -63,9 +79,25 @@ const musicsSlice = createSlice({
         setSongIsDownloading: (state, action) => {
             state.songIsDownloading = action.payload
         }
+    },
+    extraReducers: builder => {
+        builder
+            .addCase(fetchMusic.pending, state => {
+                state.loading = true;
+                state.error = false;
+            })
+            .addCase(fetchMusic.fulfilled, (state, action) => {
+                state.loading = false;
+                state.actualMusics = action.payload?.rows;
+                state.allCount = action.payload?.count;
+            })
+            .addCase(fetchMusic.rejected, state => {
+                state.loading = false;
+                state.error = true;
+            })
     }
 })
 
 const { actions, reducer } = musicsSlice;
-export const { selectMusics, togglePlay, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic, setSongIsDownloading } = actions;
+export const { selectMusics, togglePlay, stopMusic, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic, setSongIsDownloading } = actions;
 export default reducer;

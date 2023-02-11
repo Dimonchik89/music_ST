@@ -13,7 +13,7 @@ const FooterHead = () => {
             </h2>
             <Box className={footer.text__wrapper}>
                 <p className={`${footer.text}`}>
-                    I've compiled themed collections of production music libraries for your media projects, so you don't have to search 
+                    I`&apos;`ve compiled themed collections of production music libraries for your media projects, so you don`&apos;`t have to search 
                     endlessly for the perfect track. With TakeTones, all the royalty-free music you need is in one place.
                         Here are four of the latest collections compiled by our experts. Take a listen!
                 </p>

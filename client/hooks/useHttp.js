@@ -71,6 +71,15 @@ const useHttp = (url) => {
         }
     }
 
-    return { enterUser, createCategory, downloadFile, deleteData, postData, updateData }
+    const getData = async () => {
+        try {
+            const response = await $host(url)
+            return await response.data
+        } catch(e) {
+            return e
+        }
+    }
+
+    return { enterUser, createCategory, downloadFile, deleteData, postData, updateData, getData }
 }
 export default useHttp;

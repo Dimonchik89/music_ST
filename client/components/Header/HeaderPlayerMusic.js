@@ -43,14 +43,14 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
     const wavesurfer = useRef(null);
     const [ intervalId, setIntervalId ] = useState(null)
     const [duration, setDuration] = useState(0)
-    const [ timerLeft, setTimerLeft] = useState(0)
+    const [ timerLeft, setTimerLeft] = useState(15)
 
     const handleChangeProgress = () => {
         changeProgress(wavesurfer?.current?.getCurrentTime())
     }
 
     useEffect(() => {
-        setTimerLeft(10 + (music?.progress * (waveformRef.current?.scrollWidth / duration)))
+        setTimerLeft(12 + (music?.progress * (waveformRef.current?.scrollWidth / duration)))
     }, [music?.progress])
 
     const handlePlay = () => {
@@ -169,7 +169,8 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
                             <div
                                 className={sound.timer}
                                 style={{
-                                    left: timerLeft + marginLeft || 18,
+                                    // left: timerLeft + marginLeft || 50,
+                                    left: timerLeft + marginLeft || 50,
                                 }}
                             >
                                 <p className={sound.timer__text}>

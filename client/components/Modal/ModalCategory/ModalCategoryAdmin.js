@@ -3,6 +3,9 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { categoryValidate } from '../../../validate/validate';
 import { useRouter } from "next/router";
+import { fetchCategory } from "../../../store/category/categorySlice";
+import { connect } from "react-redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
 
 import error from "../../../styles/error.module.scss";
 import modal from "../../../styles/modal.module.scss";
@@ -20,7 +23,7 @@ const style = {
   p: 4,
 };
 
-const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, serverFunc, buttonTitle}) => {
+const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, serverFunc, buttonTitle, fetchCategory}) => {
     const file = useRef(null)
     const router = useRouter()
 
@@ -54,7 +57,7 @@ const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgV
                 handleOpenAlert({status: response.status, text: response.statusText})
                 values.name = ""
                 values.img = null
-                router.reload()
+                fetchCategory('category')
             } else {
                 handleClose()
                 handleOpenAlert({status: response.response.status, text: response.message})
@@ -135,4 +138,9 @@ const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgV
         </Modal>
     )
 }
-export default ModalCategoryAdmin;
+
+const mapDispatchToProps = dispatch => ({
+    fetchCategory: bindActionCreators(fetchCategory, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(ModalCategoryAdmin);

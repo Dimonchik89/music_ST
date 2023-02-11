@@ -23,7 +23,7 @@ const Search = () => {
     }
 
     return (
-        <Paper
+        <div
             component="form"
             className={search.search}
         >
@@ -49,8 +49,7 @@ const Search = () => {
                     height={15}
                 />
             </IconButton>
-
-        </Paper>
+        </div>
     )
 }
 export default Search;

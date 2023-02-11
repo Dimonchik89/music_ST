@@ -4,20 +4,24 @@ import { allCategory } from '../../store/category';
 import { connect } from "react-redux";
 import { createStructuredSelector } from 'reselect';
 import useHttp from "../../hooks/useHttp";
-import { deleteMusic } from "../../store/actualMusics";
+import { deleteMusic, fetchMusic, allCount } from "../../store/actualMusics";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import ModalMusicAdmin from "../Modal/ModalMusic/ModalMusicAdmin";
 import AlertMessage from "../AlertMessage/AlertMessage";
+import { useRouter } from "next/router";
 
 import helper from "../../styles/helper.module.scss";
 import admin from "../../styles/admin.module.scss";
 
-const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
+const AdminMusicItem = ({music, allCategory, deleteMusic, fetchMusic, allCount}) => {
     const { deleteData, updateData } = useHttp(`music/${music.id}`)
     const [categoriesInSound, setCategoriesInSound] = useState([])
     const arrCategoriesId = music.categoryId.split(', ')
     const [showModalMusic, setShowModalMusic] = useState(false)
     const [showAlert, setShowAlert] = useState({show: false, status: null, text: ""})
+    const router = useRouter()
+
+    const query = router.query.page || 1
 
     useEffect(() => {
         setCategoriesInSound(allCategory.filter(item => arrCategoriesId.includes(`${item.id}`)))
@@ -26,11 +30,24 @@ const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
     const handleDelete = () => {
         deleteData()
             .then(data => {
-                console.log(data);
                 if(data.status === 200) {
-                    deleteMusic(music.id)
+                    fetchMusic(`music?page=${query}`)
+                        .then(({payload}) => {
+                            if(!(payload.count % 9)) {
+                                const allPages = payload.count / 9
+                                router.push({
+                                    pathname: "/admin",
+                                    query: {page: allPages}
+                                })
+                            } else {
+                                const allPages = Math.ceil(payload.count / 9)
+                                router.push({
+                                    pathname: "/admin",
+                                    query: {page: allPages}
+                                })
+                            }
+                        })
                 }
-
             })
     }
 
@@ -173,11 +190,13 @@ const AdminMusicItem = ({music, allCategory, deleteMusic}) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    allCategory
+    allCategory,
+    allCount
 })
 
 const mapDispatchToProps = dispatch => ({
-    deleteMusic: bindActionCreators(deleteMusic, dispatch)
+    deleteMusic: bindActionCreators(deleteMusic, dispatch),
+    fetchMusic: bindActionCreators(fetchMusic, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminMusicItem);

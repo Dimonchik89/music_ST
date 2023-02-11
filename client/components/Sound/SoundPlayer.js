@@ -9,6 +9,7 @@ import { selectMusic } from "../../store/actualMusics";
 import { createStructuredSelector } from 'reselect';
 import { music } from "../../store/actualMusics";
 import { generateMusicLink } from "../../api/playApi";
+import { showPlayer } from "../../store/player";
 
 import helper from "../../styles/helper.module.scss";
 import button from "../../styles/button.module.scss";
@@ -33,17 +34,17 @@ const formWaveSurferOptions = (ref) => ({
         redirect: "follow"
       },
   preload: true,
-  hideScrollbar: true
+  hideScrollbar: true,
 });
 
 
-function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, headerMusic, allStop }) {
+function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPlayer, selectMusic, changeProgress, headerMusic, allStop, showPlayer }) {
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const [ intervalId, setIntervalId ] = useState(null)
   const [ duration, setDuration ] = useState(0)
   const router = useRouter();
-  const [timerLeft, setTimerLeft] = useState(0)
+  const [timerLeft, setTimerLeft] = useState(0) 
 
   const handleChangeProgress = () => {
     changeProgress(wavesurfer?.current?.getCurrentTime())
@@ -102,12 +103,8 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
         waveformRef?.current?.children[0]?.remove()
       }
     };
-
-    setTimeout(() => {
-      create();
-    }, 500)
     
-    // create();
+    create();
     
     return () => {
       if (wavesurfer.current) {
@@ -121,8 +118,11 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
   // let timerLeft = deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration))
 
   useEffect(() => {
-      setTimerLeft(deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration)))
+      setTimerLeft(deltaTimerLeft + (music?.progress * (waveformRef.current?.scrollWidth / duration)) || 5)
 
+    if(music.play && music?.progress === duration) {
+      togglePlay(music.id)
+    }
   }, [music?.progress])
 
   //----------------------------
@@ -144,6 +144,12 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
     }
   }, [music?.play])
 
+  // useEffect(() => {
+  //   if(music.play && music?.progress === duration) {
+  //     togglePlay(music.id)
+  //   }
+  // }, [music?.progress])
+
   //--------------------------
 
   const howLongPlay = () => {
@@ -157,6 +163,7 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
       return `0: 0${Math.floor(music?.progress)}`
     }
   }
+
 
   return (
     <>
@@ -185,7 +192,8 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
 
 const mapStateToProps = createStructuredSelector({
   headerMusic: music,
-  currentTimeDublicate
+  currentTimeDublicate,
+  showPlayer
 })
 
 const mapDispatchToProps = dispatch => ({

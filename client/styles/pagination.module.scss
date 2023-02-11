@@ -5,3 +5,12 @@
     justify-content: center;
     margin-top: 1.5rem;
 }
+.wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    // z-index: 1;
+    bottom: 0;
+    padding: 1rem 0;
+    background: $gray;
+}

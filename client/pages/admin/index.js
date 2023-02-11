@@ -15,9 +15,10 @@ import { addAllCategory } from "../../store/category/categorySlice";
 import ModalMusicAdmin from "../../components/Modal/ModalMusic/ModalMusicAdmin";
 import useHttp from "../../hooks/useHttp";
 import AlertMessage from '../../components/AlertMessage/AlertMessage';
+import PagePagination from "../../components/PagePagination/PagePagination";
 
 import admin from "../../styles/admin.module.scss";
-import PagePagination from "../../components/PagePagination/PagePagination";
+import pagination from "../../styles/pagination.module.scss";
 
 const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, categories, addAllCategory}) => {
     const [showModalMusic, setShowModalMusic] = useState(false)
@@ -71,10 +72,10 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
     const content = actualMusics?.map(item => <AdminMusicItem key={item.id} music={item}/>)
 
 
-    if(checkRole.message) {
-        router.push('/')
-        return null
-    }
+    // if(checkRole.message) {
+    //     router.push('/')
+    //     return null
+    // }
 
     return (
         <>
@@ -94,7 +95,7 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
                 </Box>
             </Box>
         </Container>
-        <Box style={{background: "black", padding: "10px 0"}}>
+        <Box className={pagination.wrapper}>
             <PagePagination pathname={"/admin"}/>
         </Box>
         <ModalMusicAdmin 
@@ -136,8 +137,6 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)
 
 export async function getServerSideProps({req, res, query}) {
-    console.log("req", req.cookies);
-    // console.log("res", res);
     const responseChekRole = await fetch(`${process.env.BASE_URL}/user/auth`, {
         headers: {
         'authorization': `${unescape(encodeURIComponent(`Bearer ${getCookie('token', { req, res })}`))}`

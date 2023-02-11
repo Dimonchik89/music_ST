@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { Box, Container } from "@mui/system";
 import { createStructuredSelector } from 'reselect';
 import { connect } from "react-redux";
-import { music } from "../../store/actualMusics";
+import { music, stopMusic } from "../../store/actualMusics";
 import HeaderPlayerLogo from "./HeaderPlayerLogo";
 import HeaderPlayerContent from "./HeaderPlayerContent";
 import HeaderPlayerMusic from "./HeaderPlayerMusic";
 import CloseIcon from '@mui/icons-material/Close';
-import {useRouter} from "next/router"
+import { useRouter } from "next/router"
 import { hideHeaderPlayer } from "../../store/player/playerSlice";
 import { bindActionCreators } from "@reduxjs/toolkit";
 
 import header from "../../styles/header.module.scss"
 import { IconButton } from "@mui/material";
 
-const HeaderPlayer = ({music, hideHeaderPlayer}) => {
+const HeaderPlayer = ({music, hideHeaderPlayer, stopMusic}) => {
     const [ focusDownload, setFocusDownload ] = useState(false)
     const [ activeButton, setActiveButton ] = useState(false)
     const router = useRouter()
@@ -34,6 +34,9 @@ const HeaderPlayer = ({music, hideHeaderPlayer}) => {
             pathname: '/',
             query: newQuery
         }, undefined, {shallow: true})
+        if(music.play) {
+            stopMusic(music.id)
+        }
         hideHeaderPlayer()
     }
 
@@ -71,7 +74,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-    hideHeaderPlayer: bindActionCreators(hideHeaderPlayer, dispatch)
+    hideHeaderPlayer: bindActionCreators(hideHeaderPlayer, dispatch),
+    stopMusic: bindActionCreators(stopMusic, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderPlayer);

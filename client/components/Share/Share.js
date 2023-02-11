@@ -34,7 +34,7 @@ const shareLink = [
 
 const Share = ({musicId, changeButton, addedStyle = null}) => {
 
-    const content = shareLink?.map((item, i) => <ShareItem changeButton={changeButton} iconPath={item.iconPath} title={item.title} Component={item.Component} musicId={musicId}/>)
+    const content = shareLink?.map((item, i) => <ShareItem key={i} changeButton={changeButton} iconPath={item.iconPath} title={item.title} Component={item.Component} musicId={musicId}/>)
 
     return (
         <Box className={share.share} style={addedStyle}>

@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import { allCategory } from "../../../store/category";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-
+import { fetchMusic } from "../../../store/actualMusics/musicsSlice";
+import { bindActionCreators } from "@reduxjs/toolkit";
 
 import error from "../../../styles/error.module.scss";
 import modal from "../../../styles/modal.module.scss";
@@ -26,10 +27,12 @@ const style = {
   p: 4,
 };
 
-const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, descriptionValue, categoryIdValue, keywordsValue, audioValue, serverFunc, buttonTitle, allCategory, modalTitle}) => {
+const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValue, descriptionValue, categoryIdValue, keywordsValue, audioValue, serverFunc, buttonTitle, allCategory, modalTitle, fetchMusic}) => {
     const imgRef = useRef(null)
     const audioRef = useRef(null)
     const router = useRouter()
+
+    const query = router.query.page || 1
 
     const changePreview = (e) => {
         const selectImg = e.target.files[0]
@@ -73,7 +76,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                 values.keywords = ""
                 values.audio = null
                 values.img = null
-                router.reload()
+                fetchMusic(`music?page=${query}`)
             } else {
                 handleClose()
                 handleOpenAlert({status: response.response.status, text: response.message})
@@ -244,4 +247,8 @@ const mapStateToProps = createStructuredSelector({
     allCategory
 })
 
-export default connect(mapStateToProps)(ModalMusicAdmin);
+const mapDispatchToProps = dispatch => ({
+    fetchMusic: bindActionCreators(fetchMusic, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalMusicAdmin);
