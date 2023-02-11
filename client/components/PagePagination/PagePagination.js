@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Pagination, PaginationItem } from "@mui/material"
-import { allCount } from "../../store/actualMusics"
+import { allCount, fetchPaginationMusic } from "../../store/actualMusics"
 import { connect } from "react-redux";
 import { createStructuredSelector } from 'reselect';
+import { bindActionCreators } from '@reduxjs/toolkit';
 import { useRouter } from "next/router";
 
 import pagination from "../../styles/pagination.module.scss";
 
-const PagePagination = ({allCount, pathname}) => {
+const PagePagination = ({allCount, pathname, fetchPaginationMusic}) => {
     const router = useRouter()
     const [page, setPage] = useState(+router.query.page || 1)
     const allPage = Math.ceil(+allCount / process.env.NEXT_PUBLIC_SOUND_LIMIT) || 1
@@ -17,7 +18,9 @@ const PagePagination = ({allCount, pathname}) => {
         router.push({
             pathname: pathname,
             query: {...router.query, page: value}
-        }, undefined, { scroll: false})
+        }, undefined, { scroll: false, shallow: true})
+        fetchPaginationMusic(`music?page=${value}`)
+            .then(data => console.log(data))
     }
 
     useEffect(() => {
@@ -47,4 +50,8 @@ const mapStateToProps = createStructuredSelector({
     allCount
 })
 
-export default connect(mapStateToProps)(PagePagination)
+const mapDispatchToProps = dispatch => ({
+    fetchPaginationMusic: bindActionCreators(fetchPaginationMusic, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagePagination)

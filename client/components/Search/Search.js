@@ -15,7 +15,7 @@ const Search = () => {
 
     const handleSend = (e) => {
         e.preventDefault()
-        setValue("")
+        // setValue("")
         router.push({
             pathname: "/",
             query: {keywords: value},

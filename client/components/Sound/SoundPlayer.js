@@ -144,12 +144,6 @@ function WaveSurferNext({ currentTimeDublicate, music, togglePlay, showHeaderPla
     }
   }, [music?.play])
 
-  // useEffect(() => {
-  //   if(music.play && music?.progress === duration) {
-  //     togglePlay(music.id)
-  //   }
-  // }, [music?.progress])
-
   //--------------------------
 
   const howLongPlay = () => {

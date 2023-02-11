@@ -19,6 +19,14 @@ export const fetchMusic = createAsyncThunk(
     }
 )
 
+export const fetchPaginationMusic = createAsyncThunk(
+    "music/fetchPaginationMusic",
+    (url) => {
+        const {getData} = useHttp(url)
+        return getData()
+    }
+)
+
 const musicsSlice = createSlice({
     name: 'actualMusics',
     initialState,
@@ -92,6 +100,19 @@ const musicsSlice = createSlice({
                 state.allCount = action.payload?.count;
             })
             .addCase(fetchMusic.rejected, state => {
+                state.loading = false;
+                state.error = true;
+            })
+            .addCase(fetchPaginationMusic.pending, state => {
+                state.loading = true;
+                state.error = false;
+            })
+            .addCase(fetchPaginationMusic.fulfilled, (state, action) => {
+                state.loading = false;
+                const downloadMusic = action.payload.rows?.map(item => ({...item, progress: 0, play: false}));
+                state.actualMusics = [...state.actualMusics, ...downloadMusic];
+            })
+            .addCase(fetchPaginationMusic.rejected, state => {
                 state.loading = false;
                 state.error = true;
             })

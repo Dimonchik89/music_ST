@@ -8,6 +8,10 @@
     border-radius: 2rem;
     position: absolute;
     top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .carousel__wrapper {
@@ -16,10 +20,18 @@
 
 .navigation__prev {
     left: -6rem;
+
+    @include _1366 {
+        left: -4rem;
+    }
 }
 
 .navigation__next {
     right: -6rem;
+
+    @include _1366 {
+        right: -4rem;
+    }
 }
 
 

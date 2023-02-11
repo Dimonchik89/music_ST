@@ -3,9 +3,9 @@
 
 .container {
     width: 108rem;
-    height: 94rem;
-    // height: 80%;
-    // overflow-y: scroll;
+    // height: 94rem;
+    height: 80%;
+    overflow-y: scroll;
     border: 2px solid $gray;
     border-radius: 2rem;
     background-color: rgba($black, .5);
@@ -14,11 +14,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 7.5rem;
 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
+
+    &::-webkit-scrollbar {
+        width: 10px;        
+    }
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 10px 10px $gray;
+        border: solid 3px transparent;
+        border-radius: 1rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 10px 10px $yellow;
+        border: solid 3px transparent;
+        border-radius: 1rem;
+    }
 
     @include _375 {
         width: 100%;
@@ -63,6 +80,7 @@
         border-radius: 20px;
         position: relative;
         margin-top: 3rem;
+        padding-bottom: 3rem;
 
         @include _375 {
             width: 34.3rem;

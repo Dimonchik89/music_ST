@@ -58,18 +58,18 @@ const Carousel = ({styleWrapper, category}) => {
                     {slides}
                 </Swiper>
 
-                <IconButton 
+                <div 
                     ref={navigationPrevRef}
                     className={`${carousel.navigation} ${carousel.navigation__prev}`}
                 > 
                     <ArrowBackIosNewIcon color="white"/>
-                </IconButton>
-                <IconButton 
+                </div>
+                <div 
                     ref={navigationNextRef}
                     className={`${carousel.navigation} ${carousel.navigation__next}`}
                 > 
                     <ArrowForwardIosIcon color="white"/>
-                </IconButton>
+                </div>
             </Box>
         </Box>
 
