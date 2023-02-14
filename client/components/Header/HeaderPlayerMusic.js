@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
-import Image from "next/image";
-import SoundPlayer from '../Sound/SoundPlayer';
 import ButtonPlay from '../Button/ButtonPlay';
 import { togglePlay, changeProgress, cahngeCurrentTimeDublicate } from "../../store/actualMusics";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -10,7 +8,6 @@ import { generateMusicLink } from "../../api/playApi";
 
 import helper from "../../styles/helper.module.scss";
 import header from "../../styles/header.module.scss";
-import button from "../../styles/button.module.scss"
 import sound from "../../styles/sound.module.scss";
 
 
@@ -50,7 +47,7 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
     }
 
     useEffect(() => {
-        setTimerLeft(12 + (music?.progress * (waveformRef.current?.scrollWidth / duration)))
+        setTimerLeft(18 + (music?.progress * (waveformRef.current?.scrollWidth / duration)))
     }, [music?.progress])
 
     const handlePlay = () => {
@@ -65,7 +62,6 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
     const clickOntimeScale = async () => {
 
         setTimeout(() => {
-            console.log(wavesurfer?.current.getCurrentTime());
             handleChangeProgress()
             cahngeCurrentTimeDublicate(wavesurfer?.current?.getCurrentTime())
         }, 0);
@@ -120,7 +116,6 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
         setTimeout(() => {
             wavesurfer?.current?.setCurrentTime(music?.progress)
         }, 1)
-
     }, [music?.progress])
 
     const howLongPlay = () => {
@@ -161,7 +156,7 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
                             className={header.player__scale}
                         >   
                             <div className={header.sound__start}>
-                                <span className={helper.color__white}>
+                                <span className={`${helper.color__white} ${helper.fz__16}`}>
                                     0:00
                                 </span>
                             </div>
@@ -169,8 +164,8 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
                             <div
                                 className={sound.timer}
                                 style={{
-                                    // left: timerLeft + marginLeft || 50,
-                                    left: timerLeft + marginLeft || 50,
+                                    left: `${timerLeft + marginLeft}px`,
+                                    // left: timerLeft + marginLeft || 70,
                                 }}
                             >
                                 <p className={sound.timer__text}>
@@ -178,7 +173,7 @@ const HeaderPlayerMusic = ({music, togglePlay, changeProgress, cahngeCurrentTime
                                 </p>
                             </div>
                             <div className={`${helper.d__flex} ${helper.align__end} ${helper.height__100}`}>
-                                <span className={helper.color__white}>
+                                <span className={`${helper.color__white} ${helper.fz__16}`}>
                                     {howLongduration()}
                                 </span>
                             </div>

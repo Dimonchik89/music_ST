@@ -1,25 +1,28 @@
 import { Box, TextField } from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { searchValue, changeSearchValue } from '../../store/search';
+import { connect } from "react-redux"
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { createStructuredSelector } from "reselect";
 
 import search from "../../styles/search.module.scss";
 
-const SearchMobile = ({show, toggleMobileSearch}) => {
-    const [value, setValue] = useState("")
+const SearchMobile = ({show, toggleMobileSearch, searchValue, changeSearchValue}) => {
+    // const [value, setValue] = useState("")
     const router = useRouter()
 
     const handleSend = (e) => {
         e.preventDefault()
-        setValue('')
         router.push({
             pathname: "/",
-            query: {keywords: value},
+            query: {keywords: searchValue},
         }, undefined, {scroll: false})
         toggleMobileSearch()
     }
 
     const handleChangeFindText = (e) => {
-        setValue(e.target.value)
+        changeSearchValue(e.target.value)
     }
 
     const showSearch = show ? null : {display: "none !important"}
@@ -29,7 +32,7 @@ const SearchMobile = ({show, toggleMobileSearch}) => {
             <Box className={search.mobile__wrapper}>
                 <form onSubmit={handleSend}>
                     <input 
-                        value={value}
+                        value={searchValue}
                         onChange={handleChangeFindText}
                         placeholder="Search free music"
                         type="text" 
@@ -41,4 +44,13 @@ const SearchMobile = ({show, toggleMobileSearch}) => {
 
     )
 }
-export default SearchMobile;
+
+const mapStateToProps = createStructuredSelector({
+    searchValue
+})
+
+const mapDispatchToProps = dispatch => ({
+    changeSearchValue: bindActionCreators(changeSearchValue, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchMobile);

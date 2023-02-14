@@ -76,7 +76,7 @@ const HeaderPlayerContent = ({music, changeButton, setFocusDownload, activeButto
                     </p>
                 </button>
                 <Box className={helper.d__flex}>
-                    <button className={`${button.header__square} ${button.header__heart}`}/>
+                    {/* <button className={`${button.header__square} ${button.header__heart}`}/>  // favoriter */}  
                     {showButton}
                 </Box>
             </Box>

@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       keywords: {
-        type: Sequelize.STRING
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       audio: {
         type: Sequelize.STRING

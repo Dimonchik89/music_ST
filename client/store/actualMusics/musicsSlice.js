@@ -8,6 +8,8 @@ const initialState = {
     music: null,
     currentTimeDublicate: 0,
     allCount: 0,
+    currentPage: 1,
+    limit: +process.env.NEXT_PUBLIC_SOUND_LIMIT,
     songIsDownloading: null
 }
 
@@ -86,6 +88,21 @@ const musicsSlice = createSlice({
         },
         setSongIsDownloading: (state, action) => {
             state.songIsDownloading = action.payload
+        },
+        addMusic: (state, action) => {
+            const downloadMusic = action.payload.rows?.map(item => ({...item, progress: 0, play: false}));
+            state.actualMusics = [...state.actualMusics, ...downloadMusic]
+        },
+        changeCurrentPage: (state, action) => {
+            state.currentPage = action.payload
+        },
+        incrementPage: (state) => {
+            if(Math.ceil(state.allCount / process.env.NEXT_PUBLIC_SOUND_LIMIT)) {
+                state.currentPage = state.currentPage + 1
+            }
+        },
+        changeLimit: (state, actions) => {
+            state.limit = actions.payload
         }
     },
     extraReducers: builder => {
@@ -103,22 +120,24 @@ const musicsSlice = createSlice({
                 state.loading = false;
                 state.error = true;
             })
-            .addCase(fetchPaginationMusic.pending, state => {
-                state.loading = true;
-                state.error = false;
-            })
-            .addCase(fetchPaginationMusic.fulfilled, (state, action) => {
-                state.loading = false;
-                const downloadMusic = action.payload.rows?.map(item => ({...item, progress: 0, play: false}));
-                state.actualMusics = [...state.actualMusics, ...downloadMusic];
-            })
-            .addCase(fetchPaginationMusic.rejected, state => {
-                state.loading = false;
-                state.error = true;
-            })
+            // .addCase(fetchPaginationMusic.pending, state => {
+            //     state.loading = true;
+            //     state.error = false;
+            // })
+            // .addCase(fetchPaginationMusic.fulfilled, (state, action) => {
+            //     state.loading = false;
+            //     const downloadMusic = action.payload.rows?.map(item => ({...item, progress: 0, play: false}));
+            //     console.log('downloadMusic', action.payload);
+            //     console.log('state.actualMusics', state.actualMusics);
+            //     state.actualMusics = [...state.actualMusics, ...downloadMusic];
+            // })
+            // .addCase(fetchPaginationMusic.rejected, state => {
+            //     state.loading = false;
+            //     state.error = true;
+            // })
     }
 })
 
 const { actions, reducer } = musicsSlice;
-export const { selectMusics, togglePlay, stopMusic, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic, setSongIsDownloading } = actions;
+export const { selectMusics, togglePlay, stopMusic, allStop, selectMusic, changeProgress, resetProgress, cahngeCurrentTimeDublicate, deleteMusic, setSongIsDownloading, addMusic, incrementPage, changeCurrentPage, changeLimit } = actions;
 export default reducer;

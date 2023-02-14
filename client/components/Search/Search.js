@@ -2,23 +2,29 @@ import { useState } from "react";
 import { IconButton, InputBase, Paper } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { hideHeaderPlayer, showPlayer } from "../../store/player";
+import { connect } from "react-redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { createStructuredSelector } from "reselect";
+import { searchValue, changeSearchValue } from '../../store/search';
 
 import search from "../../styles/search.module.scss";
 
-const Search = () => {
-    const [value, setValue] = useState("")
+const Search = ({ hideHeaderPlayer, showPlayer, searchValue, changeSearchValue  }) => {
     const router = useRouter()
 
     const changeValue = (e) => {
-        setValue(e.target.value);
+        changeSearchValue(e.target.value);
     }
 
     const handleSend = (e) => {
         e.preventDefault()
-        // setValue("")
+        if(showPlayer) {
+           hideHeaderPlayer() 
+        }
         router.push({
             pathname: "/",
-            query: {keywords: value},
+            query: {keywords: searchValue},
         }, undefined, {scroll: false})
     }
 
@@ -30,7 +36,7 @@ const Search = () => {
             <InputBase
                 className={search.input}
                 placeholder="Search"
-                value={value}
+                value={searchValue}
                 onChange={changeValue}
                 onKeyDown={e => {
                     if(e.keyCode === 13) handleSend(e)
@@ -52,4 +58,15 @@ const Search = () => {
         </div>
     )
 }
-export default Search;
+
+const mapStateToProps = createStructuredSelector({
+    showPlayer,
+    searchValue
+})
+
+const mapDispatchToProps = dispatch => ({
+    hideHeaderPlayer: bindActionCreators(hideHeaderPlayer, dispatch),
+    changeSearchValue: bindActionCreators(changeSearchValue, dispatch),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

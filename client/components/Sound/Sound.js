@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Box } from "@mui/material";
 import SoundItem from "./SoundItem";
 import { useRouter } from 'next/router';
@@ -13,18 +13,7 @@ import sound from "../../styles/sound.module.scss";
 const Sound = ({actualMusics, selectMusics, loading}) => {
     const { query } = useRouter();
 
-    useEffect(() => {
-        selectMusics(actualMusics.filter(item => {
-            if(query.category) {
-                return item.category == query.category
-            } else {
-                return item.category === "1"
-            }
-        }).map(item => ({...item, play: false})))
-        
-    }, [query.category])
-
-    const content = actualMusics?.map((item, i) => <SoundItem key={i} music={item}/>)
+    const content = actualMusics?.map((item, i) => <SoundItem key={item.id} music={item}/>)
 
     if(loading) {
         return <h2>Loading...</h2>

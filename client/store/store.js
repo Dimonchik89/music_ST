@@ -5,6 +5,7 @@ import header from "./header/headerSlice";
 import modal from "./modal/modalSlice";
 import user from "./user/userSlice";
 import category from "./category/categorySlice";
+import search from "./search/searchSlice";
 
 const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
         modal,
         user,
         category,
+        search
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware()
 })

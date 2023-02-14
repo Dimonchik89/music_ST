@@ -6,6 +6,7 @@ import SoundContent from "./SoundContent";
 import sound from "../../styles/sound.module.scss";
 
 const SoundItem = ({music}) => {
+
     return (
         <Box className={sound.inner}>
             <Box className={sound.item}>

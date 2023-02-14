@@ -24,6 +24,10 @@
     @include _1366 {
         left: -4rem;
     }
+
+    @include _375 {
+        display: none;
+    }
 }
 
 .navigation__next {
@@ -31,6 +35,10 @@
 
     @include _1366 {
         right: -4rem;
+    }
+
+    @include _375 {
+        display: none;
     }
 }
 
@@ -48,6 +56,11 @@
 
     &:hover {
         border: 2px solid $yellow;
+    }
+
+    @include _375 {
+        width: 16.8rem;
+        height: 11.2rem;
     }
 
     .carousel__title_wrapper {

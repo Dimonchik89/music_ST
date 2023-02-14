@@ -45,7 +45,7 @@ const SoundHead = ({music, handleOpenModal, setSongIsDownloading}) => {
                
             </span>
             <Box className={`${helper.d__flex} ${helper.align__center}`}>
-                <button className={`${sound.button} ${sound.button__heart}`}/>
+                {/* <button className={`${sound.button} ${sound.button__heart}`}/> //favorite */}
                 {showButton}
                 <button
                     href={`${process.env.NEXT_PUBLIC_IMG_URL}${music?.audio}`} 

@@ -16,6 +16,7 @@ const create = async (req, res) => {
 
         const audioPath = path.resolve(__dirname, "..", "static/music/audio")
         const imgPath = path.resolve(__dirname, "..", "static/music/logo")
+        const keywordsArr =keywords.split(",").map(item => item.trim())
 
         if(!fs.existsSync(audioPath)) {
             fs.mkdirSync(audioPath, {recursive: true})
@@ -26,7 +27,7 @@ const create = async (req, res) => {
         audio.mv(path.resolve(__dirname, "..", "static/music/audio", audioName))
         img.mv(path.resolve(__dirname, "..", "static/music/logo", imgName))
 
-        const music = await sequelize.models.Audio.create({name, categoryId, keywords, description, audio: `music/audio/${audioName}`, img: `music/logo/${imgName}`})
+        const music = await sequelize.models.Audio.create({name, categoryId, keywords: keywordsArr, description, audio: `music/audio/${audioName}`, img: `music/logo/${imgName}`})
         return res.json(music)
     } catch(e) {
         return res.status(404).json({message: "Fields must be filled"})
@@ -36,7 +37,8 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
     let {categoryId, keywords, limit, page} = req.query
-    const lookupValue = keywords?.toLowerCase()
+    // const lookupValue = keywords?.toLowerCase()
+
     page = page || 1
     limit = limit || 9
     const offset = page * limit - limit
@@ -45,10 +47,17 @@ const getAll = async (req, res) => {
     if(categoryId && !keywords) {
         audio = await sequelize.models.Audio.findAndCountAll({where: { categoryId: {[Op.like]: `%${categoryId}%`}}, limit, offset})
     } if(!categoryId && keywords) {
-        // audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: {[Op.like]: `%${keywords}%`}}, limit, offset})
-        audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: sequelize.where(sequelize.fn('LOWER', sequelize.col("keywords")), 'LIKE', `%${lookupValue}%`)}, limit, offset})
+        const keywordsArr = keywords.trim().split(" ")
+            .map(item => item.trim().replace(",", "").toLowerCase())
+            .filter(item => item != "")
+        audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: {[Op.contains]: keywordsArr}}, limit, offset})
+        // audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: {[Op.like]: `%${arrKeywords}%`}}, limit, offset})
+        // audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: sequelize.where(sequelize.fn('LOWER', sequelize.col("keywords")), 'LIKE', `%${lookupValue}%`)}, limit, offset})
     } if(categoryId && keywords) {
-        audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: sequelize.where(sequelize.fn('LOWER', sequelize.col("keywords")), 'LIKE', `%${lookupValue}%`)}, limit, offset})
+        const keywordsArr = keywords.trim().split(" ")
+            .map(item => item.trim().replace(",", "").toLowerCase())
+            .filter(item => item != "")
+        audio = await sequelize.models.Audio.findAndCountAll({where: { keywords: {[Op.contains]: keywordsArr}}, limit, offset})
     } if(!categoryId && !keywords) {
         audio = await sequelize.models.Audio.findAndCountAll({limit, offset})
     }
