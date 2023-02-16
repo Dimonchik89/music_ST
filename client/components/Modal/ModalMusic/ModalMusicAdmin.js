@@ -58,34 +58,39 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
         },
         validate: musicValidate,
         onSubmit: async (values) => {
-            console.log(values.categoryId.join(", "));
             const formData = new FormData()
             formData.append("name", values.name.trim())
             formData.append("description", values.description.trim())
-            formData.append("keywords", values.keywords.trim())
+            formData.append("keywords", values.keywords)
             formData.append("categoryId", values.categoryId.join(", "))
             formData.append("img", values.img)
             formData.append("audio", values.audio)
             const response = await serverFunc(formData)
+            console.log("response", response);
             if(response.status === 200) {
                 handleClose()
                 handleOpenAlert({status: response.status, text: response.statusText})
-                values.name = ""
-                values.description = ""
-                values.categoryId = []
-                values.keywords = ""
-                values.audio = null
-                values.img = null
+                if(buttonTitle === "create") {
+                    values.name = ""
+                    values.description = ""
+                    values.categoryId = "" 
+                    values.keywords = null
+                    values.audio = null
+                    values.img = null
+                } else {
+                    values.audio = response.data?.audio
+                    values.img = response.data?.img
+                }
                 fetchMusic(`music?page=${query}`)
             } else {
                 handleClose()
                 handleOpenAlert({status: response.response.status, text: response.message})
-                values.name = ""
-                values.description = ""
-                values.categoryId = []
-                values.keywords = ""
-                values.audio = null
-                values.img = null
+                // values.name = ""
+                // values.description = ""
+                // values.categoryId = []
+                // values.keywords = ""
+                // values.audio = null
+                // values.img = null
             }
         }
     })
@@ -170,7 +175,7 @@ const ModalMusicAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgValu
                                                                 key={category.id}
                                                                 as={FormControlLabel}
                                                                 control={<Checkbox/>}
-                                                                checked={formik.values.categoryId.includes(`${category.id}`)}
+                                                                checked={formik.values.categoryId?.includes(`${category.id}`)}
                                                                 label={category.name}
                                                                />
                                 )}

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { categoryValidate } from '../../../validate/validate';
@@ -52,17 +52,22 @@ const ModalCategoryAdmin = ({open, handleClose, handleOpenAlert, nameValue, imgV
             formData.append("name", values.name.trim())
             formData.append("img", values.img)
             const response = await serverFunc(formData)
+            console.log("response", response)
             if(response.status === 200) {
+                if(buttonTitle === "create") {
+                    values.name = ""
+                    values.img = ""
+                } else {
+                    values.img = response.data?.img
+                }
                 handleClose()
                 handleOpenAlert({status: response.status, text: response.statusText})
-                values.name = ""
-                values.img = null
-                fetchCategory('category')
+                fetchCategory('/category')
             } else {
                 handleClose()
                 handleOpenAlert({status: response.response.status, text: response.message})
-                values.name = ""
-                values.img = null
+                // values.name = ""
+                // values.img = null
             }
         }
     })

@@ -47,6 +47,8 @@ const AdminMusicItem = ({music, allCategory, deleteMusic, fetchMusic, allCount})
                                 })
                             }
                         })
+                } else {
+                    console.log("error admin music item", data);
                 }
             })
     }
@@ -125,7 +127,7 @@ const AdminMusicItem = ({music, allCategory, deleteMusic, fetchMusic, allCount})
                         component="p"
                         className={helper.text__capitalize}
                     >
-                        {music.keywords}
+                        {music.keywords.join(", ")}
                     </Typography>
                 </Box>
                 <Box className={admin.text__container}>

@@ -1,4 +1,4 @@
-import { Box, Button, Container, Tab, Tabs } from "@mui/material"
+import { Box, Button, CircularProgress, Container,  } from "@mui/material"
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
 import { role } from "../../store/user/selectors";
@@ -9,7 +9,7 @@ import { addUser } from "../../store/user/userSlice";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import jwt_decode from "jwt-decode";
 import AdminHeader from "../../components/Admin/AdminHeader";
-import { selectMusics, actualMusics } from "../../store/actualMusics";
+import { selectMusics, actualMusics, loading } from "../../store/actualMusics";
 import AdminMusicItem from "../../components/Admin/AdminMusicItem";
 import { addAllCategory } from "../../store/category/categorySlice";
 import ModalMusicAdmin from "../../components/Modal/ModalMusic/ModalMusicAdmin";
@@ -17,13 +17,14 @@ import useHttp from "../../hooks/useHttp";
 import AlertMessage from '../../components/AlertMessage/AlertMessage';
 import PagePagination from "../../components/PagePagination/PagePagination";
 
+import helper from "../../styles/helper.module.scss";
 import admin from "../../styles/admin.module.scss";
 import pagination from "../../styles/pagination.module.scss";
 
-const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, categories, addAllCategory}) => {
+const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, categories, addAllCategory, loading}) => {
     const [showModalMusic, setShowModalMusic] = useState(false)
     const [showAlert, setShowAlert] = useState({show: false, status: null, text: ""})
-    const {postData} = useHttp('music')
+    const {postData} = useHttp('/music')
     const router = useRouter()
 
 
@@ -69,6 +70,14 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
         setShowModalMusic(false)
     }
 
+    if(loading) {
+        return (
+            <Box className={`${helper.d__flex} ${helper.justify__center}`}>
+                <CircularProgress />
+            </Box>
+        )
+    }
+
     const content = actualMusics?.map(item => <AdminMusicItem key={item.id} music={item}/>)
 
 
@@ -91,7 +100,13 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
                     </Button>
                 </Box>
                 <Box className={admin.music__wrapper}>
-                    {content}
+                    {
+                        loading ?
+                        <Box className={`${helper.d__flex} ${helper.justify__center}`}>
+                            <CircularProgress />
+                        </Box> :
+                        content
+                    }
                 </Box>
             </Box>
         </Container>
@@ -125,7 +140,8 @@ const Admin = ({role, checkRole, addUser, music, selectMusics, actualMusics, cat
 
 const mapStateToProps = createStructuredSelector({
     role,
-    actualMusics
+    actualMusics,
+    loading
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Typography, Box, Button } from "@mui/material"
 import { removeCategory } from "../../store/category";
 import { bindActionCreators } from "@reduxjs/toolkit";
@@ -16,6 +16,14 @@ const AdminCategoryItem = ({category, removeCategory}) => {
     const [updateModal, setUpdateModal] = useState(false)
     const [showAlert, setShowAlert] = useState({show: false, status: null, text: ""})
 
+    const handleOpenAlert = ({status, text}) => {
+        setShowAlert({status, show: true, text})
+    }
+
+    useEffect(() => {
+        console.log('showAlert', showAlert);
+    }, [showAlert])
+
     const deleteCategory = async () => {
         const response = await deleteData()
         if(response.status === 200) {
@@ -23,10 +31,6 @@ const AdminCategoryItem = ({category, removeCategory}) => {
         } else {
             setErrorModal(true)
         }
-    }
-
-    const handleOpenAlert = ({status, text}) => {
-        setShowAlert(prev => ({status, show: true, text}))
     }
 
     const handleCloseAlert = (event, reason) => {
