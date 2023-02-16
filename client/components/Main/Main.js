@@ -15,6 +15,7 @@ import { fetchPaginationMusic, addMusic, incrementPage, currentPage, allCount, c
 import { useRouter } from "next/router";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import {Button} from "@mui/material";
+import HeaderContent from "../Header/HeaderContent";
 
 import main from "../../styles/main.module.scss";
 

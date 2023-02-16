@@ -17,6 +17,7 @@
 
         @include _375 {
             width: 95%;
+            bottom: 0;
         }
     }
 
@@ -106,9 +107,14 @@
                             text-transform: capitalize;
 
                             @include _375 {
+                                display: block;
+                                width: 12rem;
                                 font-size: 1.4rem;
                                 font-weight: 500;
                                 line-height: 2.8rem;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
                             }
                         }
                     }

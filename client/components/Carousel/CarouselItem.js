@@ -7,10 +7,11 @@ import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideHeaderPlayer } from '../../store/player/playerSlice';
 import { selectActualCategoryId, actualCategoryId } from '../../store/category';
 import { createStructuredSelector } from 'reselect';
+import { changeLimit } from '../../store/actualMusics';
 
 import carousel from "../../styles/carousel.module.scss";
 
-const CarouselItem = ({slide, allStop, hideHeaderPlayer, selectActualCategoryId, actualCategoryId}) => {
+const CarouselItem = ({slide, allStop, hideHeaderPlayer, selectActualCategoryId, actualCategoryId, changeLimit}) => {
     const [style, setStyle] = useState("")
     const router = useRouter();
 
@@ -24,6 +25,7 @@ const CarouselItem = ({slide, allStop, hideHeaderPlayer, selectActualCategoryId,
             {scroll: false}
         )
         selectActualCategoryId(slide.id)
+        changeLimit(process.env.NEXT_PUBLIC_SOUND_LIMIT)
     }
 
     useEffect(() => {
@@ -58,7 +60,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     allStop: bindActionCreators(allStop, dispatch),
     hideHeaderPlayer: bindActionCreators(hideHeaderPlayer, dispatch),
-    selectActualCategoryId: bindActionCreators(selectActualCategoryId, dispatch)
+    selectActualCategoryId: bindActionCreators(selectActualCategoryId, dispatch),
+    changeLimit: bindActionCreators(changeLimit, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarouselItem);
